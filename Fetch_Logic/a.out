@@ -1,0 +1,24 @@
+#! /usr/bin/vvp
+:ivl_version "10.3 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x556c6b66f100 .scope module, "split" "split" 2 1;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 4 "icode"
+    .port_info 1 /OUTPUT 4 "ifun"
+    .port_info 2 /INPUT 8 "Byte0"
+o0x7efe44fdf018 .functor BUFZ 8, C4<zzzzzzzz>; HiZ drive
+v0x556c6b66f2d0_0 .net "Byte0", 7 0, o0x7efe44fdf018;  0 drivers
+v0x556c6b6b1b90_0 .net "icode", 3 0, L_0x556c6b6b1db0;  1 drivers
+v0x556c6b6b1c70_0 .net "ifun", 3 0, L_0x556c6b6b1eb0;  1 drivers
+L_0x556c6b6b1db0 .part o0x7efe44fdf018, 4, 4;
+L_0x556c6b6b1eb0 .part o0x7efe44fdf018, 0, 4;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "split.v";
