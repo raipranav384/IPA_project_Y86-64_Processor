@@ -1,5 +1,6 @@
 `include "Split.v"
 `include "Align.v"
+`include "cover.v"
 `default_nettype wire
 
 module tb_Split;
@@ -8,9 +9,11 @@ wire [3:0]icode;
 wire [3:0]ifun;
 wire [3:0]rA;
 wire [3:0]rB;
-wire [63:0]valC; 
+wire signed [63:0]valC; 
 reg [7:0]Byte[9:0];
-
+wire need_regids;
+wire need_valC;
+wire Instr_valid;
 split uut2
 (
     .icode(icode),
@@ -18,13 +21,28 @@ split uut2
     .Byte0(Byte[9])
 );
 
+wrap uut1
+(
+    .need_regids(need_regids),
+    .need_valC(need_valC),
+    .Instr_valid(Instr_valid),
+    .icode(icode)
+);
 align uut 
 (
     .rA(rA),
     .rB(rB),
     .valC(valC), 
-    .Byte19(Byte),
-    .need_regids()
+    .Byte191(Byte[0]),
+    .Byte192(Byte[1]),
+    .Byte193(Byte[2]),
+    .Byte194(Byte[3]),
+    .Byte195(Byte[4]),
+    .Byte196(Byte[5]),
+    .Byte197(Byte[6]),
+    .Byte198(Byte[7]),
+    .Byte199(Byte[8]),
+    .need_regids(need_regids)
 );
 
 // align uut 
@@ -43,14 +61,14 @@ align uut
 initial begin
     $dumpfile("tb_Split.vcd");
     $dumpvars(0, tb_Split);
-    $monitor($time,"icode=%h ifun=%h rA=%h rB=%h valC=%d",icode,ifun,rA,rB,valC);
+    $monitor($time,"icode=%h ifun=%h rA=%h rB=%h valC=%d, need_regids=%b, needValC=%b",icode,ifun,rA,rB,valC,need_regids,need_valC);
     // $monitor($time," icode=%h ifun=%h rA=%h rB=%h",icode,ifun,rA,rB);
 
 end
 
 initial begin
     #1;
-    Byte[9]<=8'b00110000;
+    Byte[9]<=8'b01010000;
     Byte[8]<=8'b00010101;
     Byte[7]<=8'b11110100;
     Byte[6]<=8'b11111111;

@@ -1,0 +1,126 @@
+$date
+	Mon Feb  7 23:53:55 2022
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb_Split $end
+$var wire 64 ! valC [63:0] $end
+$var wire 4 " rB [3:0] $end
+$var wire 4 # rA [3:0] $end
+$var wire 1 $ need_valC $end
+$var wire 1 % need_regids $end
+$var wire 4 & ifun [3:0] $end
+$var wire 4 ' icode [3:0] $end
+$var wire 1 ( Instr_valid $end
+$scope module uut $end
+$var wire 8 ) Byte191 [7:0] $end
+$var wire 8 * Byte192 [7:0] $end
+$var wire 8 + Byte193 [7:0] $end
+$var wire 8 , Byte194 [7:0] $end
+$var wire 8 - Byte195 [7:0] $end
+$var wire 8 . Byte196 [7:0] $end
+$var wire 8 / Byte197 [7:0] $end
+$var wire 8 0 Byte198 [7:0] $end
+$var wire 8 1 Byte199 [7:0] $end
+$var wire 1 % need_regids $end
+$var reg 4 2 rA [3:0] $end
+$var reg 4 3 rB [3:0] $end
+$var reg 64 4 valC [63:0] $end
+$upscope $end
+$scope module uut1 $end
+$var wire 1 ( Instr_valid $end
+$var wire 1 5 ic0 $end
+$var wire 1 6 ic1 $end
+$var wire 1 7 ic2 $end
+$var wire 1 8 ic3 $end
+$var wire 1 % need_regids $end
+$var wire 1 $ need_valC $end
+$var wire 1 9 t1 $end
+$var wire 1 : t2 $end
+$var wire 1 ; t3 $end
+$var wire 1 < t4 $end
+$var wire 1 = t5 $end
+$var wire 4 > icode [3:0] $end
+$upscope $end
+$scope module uut2 $end
+$var wire 8 ? Byte0 [7:0] $end
+$var wire 4 @ ifun [3:0] $end
+$var wire 4 A icode [3:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx A
+bx @
+bx ?
+bx >
+x=
+x<
+x;
+x:
+x9
+x8
+x7
+x6
+x5
+bx 4
+bx 3
+bx 2
+bx 1
+bx 0
+bx /
+bx .
+bx -
+bx ,
+bx +
+bx *
+bx )
+x(
+bx '
+bx &
+x%
+x$
+bx #
+bx "
+bx !
+$end
+#1
+b101 "
+b101 3
+b1 #
+b1 2
+b1111111111111111111111111111111111111111111111111111111111110100 !
+b1111111111111111111111111111111111111111111111111111111111110100 4
+1$
+1%
+0(
+1<
+0=
+0;
+18
+07
+16
+05
+1:
+19
+b101 '
+b101 >
+b101 A
+b0 &
+b0 @
+b11111111 )
+b11111111 *
+b11111111 +
+b11111111 ,
+b11111111 -
+b11111111 .
+b11111111 /
+b11110100 0
+b10101 1
+b1010000 ?
+#6
