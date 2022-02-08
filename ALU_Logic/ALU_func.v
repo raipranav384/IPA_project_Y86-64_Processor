@@ -3,6 +3,8 @@
 `include "FA.v"
 `include "ADDSUB.v"
 `include "ALU.v"
+`include "Condition.v"
+`include "ConditionCode.v"
 
 module ALU_fun #(
     parameter N=64
@@ -13,13 +15,14 @@ module ALU_fun #(
     input [3:0]ifun,
     input [N-1:0]valA,
     input [N-1:0]valB,
+    input [N-1:0]valC,
     input clk
 );
 
-    wire [3:0]CF1;
+    wire [2:0]CF1;
     reg [63:0]a;
     reg [63:0]b;
-    reg [3:0]CF;
+    wire [2:0]CF;
     reg [1:0]c;
     reg set;
 
@@ -86,7 +89,7 @@ module ALU_fun #(
         endcase
     end
     ALU #(.N(N)) A(.OUT(valE),.CF(CF1),.a(a),.b(b),.c(c));
-    CC T1(.out(CF),.in(CF1),.clk(clk),.reset(0),.async_reset(0),.set(set));
+    CC T1(.out(CF),.in(CF1),.clk(clk),.reset(1'b0),.async_reset(1'b0),.set(set));
     cond T2(.cnd(cnd),.CF(CF),.ifun(ifun));
     
 endmodule

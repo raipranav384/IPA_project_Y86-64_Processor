@@ -14,21 +14,21 @@ module cond (
     or(l,CF[2],CF[0]);
     or(le,l,CF[1]);
 
-    // always @*
-    generate
+    always @*
+    // generate
     begin
-        case (icode)
-            4'b0000: cnd=x;
-            4'b0001: cnd=le;
-            4'b0010: cnd=l;
-            4'b0011: cnd=CF[1];
-            4'b0100: cnd=zfbar;
-            4'b0101: cnd=ge;
-            4'b0110: cnd=g;
-            default: cnd=x;
+        case (ifun)
+            4'b0000: cnd<=0;//put IDC
+            4'b0001: cnd<=le;
+            4'b0010: cnd<=l;
+            4'b0011: cnd<=CF[1];
+            4'b0100: cnd<=zfbar;
+            4'b0101: cnd<=ge;
+            4'b0110: cnd<=g;
+            default: cnd<=0; //put IDC
         endcase
     end
-    endgenerate
+    // endgenerate
     
 
 endmodule

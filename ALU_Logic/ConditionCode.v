@@ -1,10 +1,10 @@
-`include "flipflip.v"
+`include "flipflop.v"
 
 module CC #(
-   parameter  N=3; 
+   parameter N=3
 ) (
-    output reg [N-1]out;
-    input [N-1,0]in;
+    output [N-1:0]out,
+    input [N-1:0]in,
     input clk,
     input reset,
     input async_reset,
@@ -13,9 +13,9 @@ module CC #(
 
     genvar i;
     generate
-        for(i=0;i<=N;i++)
+        for(i=0;i<N;i=i+1)
         begin
-            ff(.out(out[i]),.in(in[i]),.clk(clk),.reset(reset),.async_reset(async_reset),.en(set));
+            ff T(.out(out[i]),.in(in[i]),.clk(clk),.reset(reset),.async_reset(async_reset),.en(set));
         end
     endgenerate    
 endmodule

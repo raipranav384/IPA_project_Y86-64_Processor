@@ -17,14 +17,16 @@ module ALU #(
     always @*
     begin
         case(c)
-            2'b00: OUT=OUT1;
-            2'b01: OUT=OUT1;
-            2'b10: OUT=OUT2;
-            2'b11: OUT=OUT3;
+            2'b00: OUT<=OUT1;
+            2'b01: OUT<=OUT1;
+            2'b10: OUT<=OUT2;
+            2'b11: OUT<=OUT3;
         endcase
-        CF[1]=OUT==0?1:0;
-        CF[2]=(OUT[N-1]==1)?1:0;
+        
         
     end
-
+    // CF[1]=OUT==0?1:0;
+    // CF[2]<=(OUT[N-1]==1)?1:0;
+    assign CF[2]=OUT[N-1];
+    and (CF[1],OUT);
 endmodule

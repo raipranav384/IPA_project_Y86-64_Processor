@@ -1,6 +1,6 @@
 module ff(
-    output reg out,out_bar;
-    input in,clk,reset,async_reset,en;
+    output reg out,out_bar,
+    input in,clk,reset,async_reset,en
 );
     always @(posedge clk)
     begin
