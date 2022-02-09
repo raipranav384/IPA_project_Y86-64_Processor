@@ -1,6 +1,6 @@
 `include "flipflop.v"
 
-module CC #(
+module regNbit #(
    parameter N=3
 ) (
     output [N-1:0]out,

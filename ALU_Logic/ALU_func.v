@@ -89,7 +89,7 @@ module ALU_fun #(
         endcase
     end
     ALU #(.N(N)) A(.OUT(valE),.CF(CF1),.a(a),.b(b),.c(c));
-    CC T1(.out(CF),.in(CF1),.clk(clk),.reset(1'b0),.async_reset(1'b0),.set(set));
+    regNbit T1(.out(CF),.in(CF1),.clk(clk),.reset(1'b0),.async_reset(1'b0),.set(set));
     cond T2(.cnd(cnd),.CF(CF),.ifun(ifun));
     
 endmodule
