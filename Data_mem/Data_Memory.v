@@ -3,10 +3,11 @@ module DataMem #(
     parameter N=64
 ) (
     output reg [N-1:0]outData,
-    output reg dmem_err,
+    input dmem_err,
+    // input  reg [7:0]memory[65535:0],
     input [N-1:0] inData,
     input [N-1:0] inAdd,
-    input rEn,wEn,clk//,reset
+    input rEn,wEn,clk,reset
 );
     
     reg [7:0]memory[65535:0];
@@ -16,10 +17,9 @@ module DataMem #(
     begin
         // for( i=inAdd;i<inAdd+8 && dmem_err;i=i+1)
         // begin
-            dmem_err<=(inAdd+7>=65536)|(rEn&wEn);
-            if(dmem_err!=0)
+            if(~dmem_err)
             begin
-                if(rEn&~wEn)
+                if(rEn&~wEn&~reset)
                 begin
                     // outData[i-inAdd:i-inAdd+7]<=memory[i];
                     // outData[j:j+7]<=memory[i];
@@ -33,7 +33,7 @@ module DataMem #(
                     outData[63:56]<=memory[inAdd+7];
 
                 end
-                if(~rEn&wEn)
+                if(~rEn&wEn&~reset)
                 begin
                     // memory[i]<=inData[i-inAdd:i-inAdd+7];
                     // memory[i]<=inData[j:j+7];
@@ -45,6 +45,25 @@ module DataMem #(
                     memory[inAdd+5]<=inData[47:40];
                     memory[inAdd+6]<=inData[55:48];
                     memory[inAdd+7]<=inData[63:56];
+                end
+                if(reset)
+                begin
+                    outData[7:0]<=8'b0;
+                    outData[15:8]<=8'b0;
+                    outData[23:16]<=8'b0;
+                    outData[31:24]<=8'b0;
+                    outData[39:32]<=8'b0;
+                    outData[47:40]<=8'b0;
+                    outData[55:48]<=8'b0;
+                    outData[63:56]<=8'b0;
+                    memory[inAdd+0]<=8'b0;
+                    memory[inAdd+1]<=8'b0;
+                    memory[inAdd+2]<=8'b0;
+                    memory[inAdd+3]<=8'b0;
+                    memory[inAdd+4]<=8'b0;
+                    memory[inAdd+5]<=8'b0;
+                    memory[inAdd+6]<=8'b0;
+                    memory[inAdd+7]<=8'b0;
                 end
             end
             else

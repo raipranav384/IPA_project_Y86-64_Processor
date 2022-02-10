@@ -1,0 +1,161 @@
+$date
+	Thu Feb 10 19:18:09 2022
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb_Data_memWrap $end
+$var wire 64 ! inAdd [63:0] $end
+$var wire 64 " valM [63:0] $end
+$var wire 2 # stat [1:0] $end
+$var reg 1 $ clk $end
+$var reg 1 % cond $end
+$var reg 4 & icode [3:0] $end
+$var reg 1 ' imem_error $end
+$var reg 1 ( instr_valid $end
+$var reg 1 ) rst $end
+$var reg 64 * valA [63:0] $end
+$var reg 64 + valE [63:0] $end
+$var reg 64 , valP [63:0] $end
+$scope module uut $end
+$var wire 1 $ clk $end
+$var wire 4 - icode [3:0] $end
+$var wire 1 ' imem_error $end
+$var wire 1 ( instr_valid $end
+$var wire 1 ) rst $end
+$var wire 64 . valA [63:0] $end
+$var wire 64 / valE [63:0] $end
+$var wire 64 0 valP [63:0] $end
+$var wire 64 1 valM [63:0] $end
+$var reg 1 2 dmem_err $end
+$var reg 64 3 inAdd [63:0] $end
+$var reg 64 4 inData [63:0] $end
+$var reg 1 5 rEn $end
+$var reg 2 6 stat [1:0] $end
+$var reg 1 7 wEn $end
+$scope module A $end
+$var wire 1 $ clk $end
+$var wire 1 2 dmem_err $end
+$var wire 64 8 inAdd [63:0] $end
+$var wire 64 9 inData [63:0] $end
+$var wire 1 5 rEn $end
+$var wire 1 ) reset $end
+$var wire 1 7 wEn $end
+$var reg 64 : outData [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx :
+bx 9
+bx 8
+x7
+bx 6
+x5
+bx 4
+bx 3
+x2
+bx 1
+bx 0
+bx /
+bx .
+bx -
+bx ,
+bx +
+bx *
+x)
+x(
+x'
+bx &
+x%
+0$
+bx #
+bx "
+bz !
+$end
+#1
+12
+b10 #
+b10 6
+b10000000000000000 3
+b10000000000000000 8
+b1100 4
+b1100 9
+17
+05
+1(
+0'
+b1010 ,
+b1010 0
+b1100 *
+b1100 .
+b10000000000000000 +
+b10000000000000000 /
+b100 &
+b100 -
+0)
+#15
+b0 "
+b0 1
+b0 :
+1$
+#21
+b0 #
+b0 6
+02
+b111010 3
+b111010 8
+b0 4
+b0 9
+07
+15
+b1011 ,
+b1011 0
+b111010 +
+b111010 /
+b101 &
+b101 -
+#30
+0$
+#45
+bx "
+bx 1
+bx :
+1$
+#60
+0$
+#61
+b1100 4
+b1100 9
+17
+05
+b100 &
+b100 -
+#75
+1$
+#90
+0$
+#101
+b0 4
+b0 9
+07
+15
+b111010 *
+b111010 .
+b1001 &
+b1001 -
+#105
+b1100 "
+b1100 1
+b1100 :
+1$
+#120
+0$
+#135
+1$
+#141

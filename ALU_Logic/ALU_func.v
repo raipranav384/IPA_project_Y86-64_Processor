@@ -50,34 +50,50 @@ module ALU_fun #(
     begin
         set=0;
         case(icode)
-        6:  begin
+        6:  begin   //opq
                 a<=valB;
                 b<=valA;
                 c<=icode[1:0];
                 set<=1;
             end
-        4:  begin
+        3:  begin   //irmovq
+                a<=valC;
+                b<=64'd0;
+                c<=2'b00;
+                
+            end
+        4:  begin   //rmmovq
                 a<=valC;
                 b<=valA;
                 c<=2'b00;
                 
             end
-        2:  begin
+        5:  begin   //mrmovq
+                a<=valB;
+                b<=valC;
+                c<=2'b00;
+                
+            end
+        2:  begin   //cmov
                 a<=64'd0;
                 b<=valA;
                 c<=2'b00;
                 
             end
-        8:  begin
+        8:  begin   //call
                 a<=valB;
                 b<=64'd8;
                 c<=2'b01;
                 
             end
-        11:  begin
+        11:  begin  //popq
                 a<=valB;
                 b<=64'd8;
                 c<=2'b00;
+        10:  begin  //pushq
+                a<=valB;
+                b<=64'd8;
+                c<=2'b01;
                 
             end
         default:  begin
