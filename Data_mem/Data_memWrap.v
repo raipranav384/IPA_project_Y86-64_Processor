@@ -12,7 +12,7 @@ module DataWrap (
     input [63:0]valA,
     input [63:0]valP,
     input [3:0]icode,
-    input instr_valid,imem_error,clk,rst
+    input Instr_valid,imem_error,clk,rst
 );
     reg dmem_err;
     reg rEn,wEn;
@@ -66,7 +66,7 @@ module DataWrap (
             stat<=2'd1;
         else if(dmem_err==1||imem_error==1)
             stat<=2'd2;
-        else if(!instr_valid)
+        else if(!Instr_valid)
             stat<=2'd3;
         else
             stat<=2'd0;

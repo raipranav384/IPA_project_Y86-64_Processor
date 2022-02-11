@@ -1,14 +1,15 @@
-module moduleName (
-    output [63:0]PC,
-    input [3:0],
+module PC_update (
+    output reg [63:0]PC,
+    input [3:0]icode,
     input cnd,
-    input [63:0] valC,valM,valP
+    input [63:0] valC,valM,valP,
+    input clk
 );
 
-always @*
+always @(posedge clk)
 begin
     case(icode)
-    1: PC<=valP
+    1: PC<=valP;
 
     2: PC<=valP;    //cmov
 

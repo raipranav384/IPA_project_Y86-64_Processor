@@ -90,6 +90,7 @@ module ALU_fun #(
                 a<=valB;
                 b<=64'd8;
                 c<=2'b00;
+            end
         10:  begin  //pushq
                 a<=valB;
                 b<=64'd8;
