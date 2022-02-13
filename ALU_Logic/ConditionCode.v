@@ -3,7 +3,7 @@
 module regNbit #(
    parameter N=3
 ) (
-    output [N-1:0]out,
+    output reg [N-1:0]out,
     input [N-1:0]in,
     input clk,
     input reset,
@@ -11,11 +11,22 @@ module regNbit #(
     input set
 );
 
-    genvar i;
-    generate
-        for(i=0;i<N;i=i+1)
-        begin
-            ff T(.out(out[i]),.in(in[i]),.clk(clk),.reset(reset),.async_reset(async_reset),.en(set));
-        end
-    endgenerate    
+    // genvar i;
+    // generate
+    //     for(i=0;i<N;i=i+1)
+    //     begin
+    //         ff T(.out(out[i]),.in(in[i]),.clk(clk),.reset(reset),.async_reset(async_reset),.en(set));
+    //     end
+    // endgenerate  
+
+    always @(posedge clk)
+    begin
+        if(~reset)
+            out<=in;
+        else
+            out<=0;
+    end
+    always @(negedge clk)
+        out<=in;
+
 endmodule

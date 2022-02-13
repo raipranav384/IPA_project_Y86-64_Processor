@@ -53,7 +53,7 @@ module ALU_fun #(
         6:  begin   //opq
                 a<=valB;
                 b<=valA;
-                c<=icode[1:0];
+                c<=ifun[1:0];
                 set<=1;
             end
         3:  begin   //irmovq

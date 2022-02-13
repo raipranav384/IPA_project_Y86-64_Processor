@@ -32,16 +32,39 @@ module RegFile (
 // reg srcA,srcB,dstE,dstM;
 reg [63:0]register[15:0];
 
+always @*
+begin
+    case(icode)
+    8:valB<=register[4];
+    9:begin //ret
+    valA<=register[4];
+    valB<=register[4];
+    end
+    10:begin //pushq
+    valA<=register[rA];
+    valB<=register[4];
+    end
+    11:begin //popq
+    valA<=register[4];
+    valB<=register[4];
+    end
+    default:begin
+        valA<=register[rA];
+        valB<=register[rB];
+    end
+    endcase
+end
+
 always @(posedge clk)
 begin
     case(icode)
     6:begin  //opq
-    valA<=register[rA];
-    valB<=register[rB];
+    // valA<=register[rA];
+    // valB<=register[rB];
     register[rB]<=valE;
     end
     2:begin //cmovXX
-    valA<=register[rA];
+    // valA<=register[rA];
     if(cnd)
     begin
     register[rB]<=valE;
@@ -50,31 +73,31 @@ begin
     3:begin //irmovq
     register[rB]<=valE;
     end
-    4:begin //rmmovq
-    valA<=register[rA];
-    valB<=register[rB];
-    end
+    // 4:begin //rmmovq
+    // valA<=register[rA];
+    // valB<=register[rB];
+    // end
     5:begin //mrmovq
-    valB<=register[rB];
+    // valB<=register[rB];
     register[rA]<=valM;
     end
     8:begin //call
-    valB<=register[4];
+    // valB<=register[4];
     register[4]<=valE;
     end
     9:begin //ret
-    valA<=register[4];
-    valB<=register[4];
+    // valA<=register[4];
+    // valB<=register[4];
     register[4]<=valE;
     end
     10:begin //pushq
-    valA<=register[rA];
-    valB<=register[4];
+    // valA<=register[rA];
+    // valB<=register[4];
     register[4]<=valE;
     end
     11:begin //popq
-    valA<=register[4];
-    valB<=register[4];
+    // valA<=register[4];
+    // valB<=register[4];
     if(rA==4)
     begin
         register[4]<=valM;
@@ -86,8 +109,10 @@ begin
     end
     end
     default:begin
-    valA=0;
-    valB=0;
+    // valA=0;
+    // valB=0;
+    valA<=register[rA];
+    valB<=register[rB];
     end
     endcase
 end  

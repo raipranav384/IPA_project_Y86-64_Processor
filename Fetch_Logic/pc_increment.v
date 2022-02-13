@@ -11,11 +11,11 @@ begin
     begin
     valP<=PC+10;
     end
-    if(need_regids&~need_valC)
+    else if(need_regids&~need_valC)
     begin
     valP<=PC+2;
     end
-    if(~need_regids&need_valC)
+    else if(~need_regids&need_valC)
     begin
     valP<=PC+9;
     end

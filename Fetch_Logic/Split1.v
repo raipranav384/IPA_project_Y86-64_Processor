@@ -35,13 +35,13 @@ module split(
     begin
          icode<=~imem_err?Byte0[7:4]:4'b0;
          ifun<=Byte0[3:0];
-        if((icode>=2 && icode<=6 )||(icode>=10 && icode<=11))
+        if((icode==2||icode==3||icode==4||icode==5|| icode==6 )||(icode==10|| icode==11))
         
              need_regids<=1'b1;
         
         else
             need_regids<=1'b0;
-        if((icode==3 || icode<=4 )||(icode==7 || icode==8))
+        if((icode==3 || icode==4 )||(icode==7 || icode==8))
         
              need_valC<=1'b1;
         
