@@ -31,7 +31,9 @@ module RegFile (
 // reg eEn,wEn;
 // reg srcA,srcB,dstE,dstM;
 reg [63:0]register[15:0];
-
+initial begin
+    register[6]<=64'd65535; //change if PC points to LSB
+end
 always @*
 begin
     case(icode)

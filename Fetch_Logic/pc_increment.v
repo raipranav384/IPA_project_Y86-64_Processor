@@ -19,10 +19,12 @@ begin
     begin
     valP<=PC+9;
     end
-    else
+    else if (~need_regids&need_valC)
     begin
     valP<=PC+1;
     end
+    else
+    valP<=PC;   //Condition so that initially valP=PC instead of PC=1
    // valP = PC + 1 + need_regids + 8*need_valC;
 end
 endmodule

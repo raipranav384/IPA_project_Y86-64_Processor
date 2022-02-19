@@ -2,38 +2,68 @@ module PC_update (
     output reg [63:0]PC,
     input [3:0]icode,
     input cnd,
+    input [1:0] stat,
     input [63:0] valC,valM,valP,
     input clk
 );
+initial begin
+    PC<=0;
+end
 
 always @(posedge clk)
 begin
     case(icode)
-    1: PC<=valP;
 
-    2: PC<=valP;    //cmov
+    // 1: PC<=valP;
 
-    3: PC<=valP;    //irmovq
+    // 2: PC<=valP;    //cmov
 
-    4: PC<=valP;    //rmmovq
+    // 3: PC<=valP;    //irmovq
 
-    5: PC<=valP;    //mrmovq
+    // 4: PC<=valP;    //rmmovq
 
-    6: PC<=valP;    //OPq
+    // 5: PC<=valP;    //mrmovq
 
-    7: PC<=cnd?valC:valP;   //jump
+    // 6: PC<=valP;    //OPq
 
-    8: PC<=valC;    //call
+    7:  //PC<=cnd?valC:valP;  //jump
+        begin
+        if(stat==2'b0)
+            PC<=cnd?valC:valP;
+        else
+            PC<=PC;
+        end
 
-    9: PC<=valM;    //ret
 
-    10: PC<=valP;   //pushq
+    8: //PC<=valC;    //call
+        begin
+           if(stat==2'b0)
+            PC<=valC;
+        else
+            PC<=PC;
+        end 
 
-    11: PC<=valP;   //popq
+    9: //PC<=valM;    //ret
+        begin
+            if(stat==2'b0)
+            PC<=valM;
+        else
+            PC<=PC;
+        end
 
-    default: PC<=0;
+    // 10: PC<=valP;   //pushq
 
+    // 11: PC<=valP;   //popq
+
+    default:begin   //nop cmov irmovq mrmovq OPq popq pushq
+        if(stat==2'b0)
+            PC<=valP;
+        else
+            PC<=PC;
+        end
     endcase
+
+
 end
     
 endmodule

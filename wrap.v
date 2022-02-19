@@ -10,20 +10,20 @@
 
 
 module y86wrap (
-    output [63:0]PCt,
     output [79:0]Byte,
     output [63:0]valM,valE,valC,valP,valA,valB,
     output [3:0] icode,ifun,rA,rB,
-    output [1:0]stat,
     output cnd,imem_err,Instr_valid,need_regids,need_valC,
+    output [1:0]stat,
+    output [63:0]PCt,
     input clk
 );
 
 reg [7:0]in; //for loading to the instruction memory
 
 wire [79:0]Byte;
-// wire [63:0]PCt;
-reg [63:0]PC;
+wire [63:0]PC;
+// reg [63:0]PC;
 
 // wire [63:0]PC,valM,valE,valC,valP,valA,valB;
 
@@ -32,16 +32,16 @@ reg [63:0]PC;
 // wire cnd,imem_err,Instr_valid,need_regids,need_valC;
 
 
-initial begin
+// initial begin
     
-    //  stat<=2'b0;
-     PC<=64'd0;
-    //  imem_err<=0;
-    //  Instr_valid<=0;
-    //  need_regids<=0;
-    //  need_valC<=0;
-end
-        always @(posedge clk)   PC<=PCt;
+//     //  stat<=2'b0;
+//     //  PC<=64'd0;
+//     //  imem_err<=0;
+//     //  Instr_valid<=0;
+//     //  need_regids<=0;
+//     //  need_valC<=0;
+// end
+        // always @(posedge clk)   PC<=PCt;
 
         instruction_memory IM(.byte19(Byte[71:0]),.byte0(Byte[79:72]),.imem_err(imem_err),.clk(clk),.wEn(1'b0),.PC(PC));
         split Sp(.need_regids(need_regids),.need_valC(need_valC),.Instr_valid(Instr_valid) ,.icode(icode),.ifun(ifun),.Byte0(Byte[79:72]),.imem_err(imem_err));
@@ -53,9 +53,9 @@ end
         ALU_fun #(.N(64)) ALU(.valE(valE),.cnd(cnd),.icode(icode),.ifun(ifun),.valA(valA),.valB(valB),.valC(valC),.clk(clk));
 
         DataWrap Dm (.valM(valM),.stat(stat),.valE(valE),.valA(valA),.valP(valP),.icode(icode),.Instr_valid(Instr_valid),.imem_error(imem_err),.clk(clk),.rst(1'b0));
+        PC_update PCU(.PC(PC),.icode(icode),.cnd(cnd),.valC(valC),.valM(valM),.valP(valP),.stat(stat),.clk(clk));
 
-        PC_update PCU(.PC(PCt),.icode(icode),.cnd(cnd),.valC(valC),.valM(valM),.valP(valP),.clk(clk));
-
+        assign PCt=PC;
         
 // always @(stat==0)
 //     begin

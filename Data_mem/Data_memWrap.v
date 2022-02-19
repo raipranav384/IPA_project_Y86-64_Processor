@@ -18,11 +18,15 @@ module DataWrap (
     reg rEn,wEn;
     reg [63:0]inData,inAdd;
     // This is inpendent of clock, combinational logic part of data memory
+
+    // initial begin
+    //     stat<=1;
+    // end
     always @ (*)
     begin
         case(icode)
             4:begin     //rmmovq
-                 rEn<=0;
+                rEn<=0;
                 wEn<=1;
                 inData<=valA;
                 inAdd<=valE;
@@ -61,7 +65,8 @@ module DataWrap (
                      wEn<=0;
             end
         endcase
-        dmem_err<=(inAdd+7>=65536)||(rEn&wEn);
+        // dmem_err<=(inAdd+7>=65536)||(rEn&wEn);   //Add is the LSB
+        dmem_err<=(inAdd>=65536)||(rEn&wEn);        //Add points to MSB
         if(icode==0)
             stat<=2'd1;
         else if(dmem_err==1||imem_error==1)

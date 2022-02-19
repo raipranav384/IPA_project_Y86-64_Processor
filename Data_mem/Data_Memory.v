@@ -23,14 +23,22 @@ module DataMem #(
                 begin
                     // outData[i-inAdd:i-inAdd+7]<=memory[i];
                     // outData[j:j+7]<=memory[i];
-                    outData[7:0]<=memory[inAdd+0];
-                    outData[15:8]<=memory[inAdd+1];
-                    outData[23:16]<=memory[inAdd+2];
-                    outData[31:24]<=memory[inAdd+3];
-                    outData[39:32]<=memory[inAdd+4];
-                    outData[47:40]<=memory[inAdd+5];
-                    outData[55:48]<=memory[inAdd+6];
-                    outData[63:56]<=memory[inAdd+7];
+                    outData[7:0]<=memory[inAdd+0];  //Little endian, but dec format PC points to highest add.
+                    outData[15:8]<=memory[inAdd-1];
+                    outData[23:16]<=memory[inAdd-2];
+                    outData[31:24]<=memory[inAdd-3];
+                    outData[39:32]<=memory[inAdd-4];
+                    outData[47:40]<=memory[inAdd-5];
+                    outData[55:48]<=memory[inAdd-6];
+                    outData[63:56]<=memory[inAdd-7];
+                    // outData[7:0]<=memory[inAdd+7];  //Little Endian format
+                    // outData[15:8]<=memory[inAdd+6];
+                    // outData[23:16]<=memory[inAdd+5];
+                    // outData[31:24]<=memory[inAdd+4];
+                    // outData[39:32]<=memory[inAdd+3];
+                    // outData[47:40]<=memory[inAdd+2];
+                    // outData[55:48]<=memory[inAdd+1];
+                    // outData[63:56]<=memory[inAdd+0];
 
                 end
                 if(~rEn&wEn&~reset)
@@ -38,13 +46,22 @@ module DataMem #(
                     // memory[i]<=inData[i-inAdd:i-inAdd+7];
                     // memory[i]<=inData[j:j+7];
                     memory[inAdd+0]<=inData[7:0];
-                    memory[inAdd+1]<=inData[15:8];
-                    memory[inAdd+2]<=inData[23:16];
-                    memory[inAdd+3]<=inData[31:24];
-                    memory[inAdd+4]<=inData[39:32];
-                    memory[inAdd+5]<=inData[47:40];
-                    memory[inAdd+6]<=inData[55:48];
-                    memory[inAdd+7]<=inData[63:56];
+                    memory[inAdd-1]<=inData[15:8];
+                    memory[inAdd-2]<=inData[23:16];
+                    memory[inAdd-3]<=inData[31:24];
+                    memory[inAdd-4]<=inData[39:32];
+                    memory[inAdd-5]<=inData[47:40];
+                    memory[inAdd-6]<=inData[55:48];
+                    memory[inAdd-7]<=inData[63:56];
+
+                    // memory[inAdd+7]<=inData[7:0];
+                    // memory[inAdd+6]<=inData[15:8];
+                    // memory[inAdd+5]<=inData[23:16];
+                    // memory[inAdd+4]<=inData[31:24];
+                    // memory[inAdd+3]<=inData[39:32];
+                    // memory[inAdd+2]<=inData[47:40];
+                    // memory[inAdd+1]<=inData[55:48];
+                    // memory[inAdd+0]<=inData[63:56];
                 end
                 if(reset)
                 begin

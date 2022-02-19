@@ -8,68 +8,49 @@ module instruction_memory(
     // input [7:0]val5, [7:0]val6, [7:0]val7, [7:0]val8, [7:0]val9
 );
 
-reg [7:0]memory[65535:0];
+reg [7:0]memory[1024:0];
 initial begin
-    
 // First instruction
 memory[0][7:4]<=4'd3;
 memory[0][3:0]<=4'd0;
-
 memory[1][7:4]<=4'd15;
 memory[1][3:0]<=4'd11;
-
 memory[2][7:4]<=4'd0;
 memory[2][3:0]<=4'd5;
-
 memory[3][7:4]<=4'd0;
 memory[3][3:0]<=4'd0;
-
 memory[4][7:4]<=4'd0;
 memory[4][3:0]<=4'd0;
-
 memory[5][7:4]<=4'd0;
 memory[5][3:0]<=4'd0;
-
 memory[6][7:4]<=4'd0;
 memory[6][3:0]<=4'd0;
-
 memory[7][7:4]<=4'd0;
 memory[7][3:0]<=4'd0;
-
 memory[8][7:4]<=4'd0;
 memory[8][3:0]<=4'd0;
-
 memory[9][7:4]<=4'd0;
 memory[9][3:0]<=4'd0;
 
 // Second instruction
 memory[10+0][7:4]<=4'd3;
 memory[10+0][3:0]<=4'd0;
-
 memory[10+1][7:4]<=4'd15;
 memory[10+1][3:0]<=4'd10;
-
 memory[10+2][7:4]<=4'd0;
 memory[10+2][3:0]<=4'd10;
-
 memory[10+3][7:4]<=4'd0;
 memory[10+3][3:0]<=4'd0;
-
 memory[10+4][7:4]<=4'd0;
 memory[10+4][3:0]<=4'd0;
-
 memory[10+5][7:4]<=4'd0;
 memory[10+5][3:0]<=4'd0;
-
 memory[10+6][7:4]<=4'd0;
 memory[10+6][3:0]<=4'd0;
-
 memory[10+7][7:4]<=4'd0;
 memory[10+7][3:0]<=4'd0;
-
 memory[10+8][7:4]<=4'd0;
 memory[10+8][3:0]<=4'd0;
-
 memory[10+9][7:4]<=4'd0;
 memory[10+9][3:0]<=4'd0;
 
@@ -77,20 +58,44 @@ memory[10+9][3:0]<=4'd0;
 
 memory[20+0][7:4]<=4'd6;
 memory[20+0][3:0]<=4'd0;
-
 memory[20+1][7:4]<=4'd11;
 memory[20+1][3:0]<=4'd10;
 
-//4th instruction
-memory[22+0][7:4]<=4'd0;
-memory[22+0][3:0]<=4'd0;
 
+//4th instruction
+memory[22+0][7:4]<=4'd4;
+memory[22+0][3:0]<=4'd0;
+memory[22+1][7:4]<=4'd10;
+memory[22+1][3:0]<=4'd6;
+memory[22+2][7:4]<=4'd0;
+memory[22+2][3:0]<=4'd0;
+memory[22+3][7:4]<=4'd0;
+memory[22+3][3:0]<=4'd0;
+memory[22+4][7:4]<=4'd0;
+memory[22+4][3:0]<=4'd0;
+memory[22+5][7:4]<=4'd0;
+memory[22+5][3:0]<=4'd0;
+memory[22+6][7:4]<=4'd0;
+memory[22+6][3:0]<=4'd0;
+memory[22+7][7:4]<=4'd0;
+memory[22+7][3:0]<=4'd0;
+memory[22+8][7:4]<=4'd0;
+memory[22+8][3:0]<=4'd0;
+memory[22+9][7:4]<=4'd0;
+memory[22+9][3:0]<=4'd0;
+
+//5th instruction
+memory[32+0][7:4]<=4'd0;
+memory[32+0][3:0]<=4'd0;
 end
 
-//4th 
 
 
 always @(posedge clk)
+begin
+    imem_err<=(PC+9>=1025);
+end
+always @(*)
 begin
     //     if(wEn)
     // begin
@@ -106,7 +111,6 @@ begin
     //     memory[PC+9]<=val9; 
     // end    
     
-    imem_err<=(PC+9>=65536);
 
       if(~imem_err)
         begin
