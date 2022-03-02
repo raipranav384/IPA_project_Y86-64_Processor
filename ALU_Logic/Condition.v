@@ -18,7 +18,7 @@ module cond (
     // generate
     begin
         case (ifun)
-            4'b0000: cnd<=0;//put IDC
+            4'b0000: cnd<=1;//put IDC
             4'b0001: cnd<=le;
             4'b0010: cnd<=l;
             4'b0011: cnd<=CF[1];

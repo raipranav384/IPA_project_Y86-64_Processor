@@ -1,6 +1,8 @@
 `include "Fetch_Logic/inst_mem.v"
 `include "Fetch_Logic/Split1.v"
 `include "Fetch_Logic/Align.v"
+`include "Fetch_Logic/predict_pc.v"
+`include "Fetch_Logic/select_pc.v"
 `include "Fetch_Logic/pc_increment.v"
 `include "ALU_Logic/ALU_func.v"
 `include "RegisterFile/registerfile1.v"
@@ -51,11 +53,11 @@ wire [63:0]PC;
     wire [3:0]D_rA;
     wire [3:0]D_rB;
     wire [63:0]D_valC;
-    wire [63:0]D_valA;
-    wire [63:0]D_valB;
+    wire [63:0]d_valA;
+    wire [63:0]d_valB;
     wire [63:0]D_valP;
-    wire [3:0]D_dstE;
-    wire [3:0]D_dstM;
+    wire [3:0]d;
+    wire [3:0]d;
     wire [3:0]D_srcA;
     wire [3:0]D_srcB;
 
@@ -110,35 +112,123 @@ wire [63:0]PC;
 
 
         // always @(posedge clk)   PC<=PCt;
+        pipe_reg F (
+        .stat(f_stat),
+        .icode(f_icode),
+        .ifun(f_ifun),
+        .rA(f_rA),
+        .rB(f_rB),
+        .valC(f_valC),
+        .valP(f_valP),
 
-        PC_update PCU(.PC(PC),.icode(icode),.cnd(cnd),.valC(valC),.valM(valM),.valP(valP),.stat(stat),.clk(clk));
+        .o_stat(E_stat),
+        .o_icode(E_icode),
+        .o_ifun(D_ifun),
+        .o_rA(D_rA),
+        .o_rB(D_rB),
+        .o_valC(D_valC),
+        .o_valP(D_valP)
+            );
+        //PC_update PCU(.PC(PC),.icode(icode),.cnd(cnd),.valC(valC),.valM(valM),.valP(valP),.stat(stat),.clk(clk));
+        //FETCH STAGE
+        pipe_reg F(
+            .o_pred_PC(F_predPC),
+            .pred_PC(sel_PC)
+        );
         //Fetch
+        sel_PC selP(.f_pc(f_pc),.F_predPC(F_predPC),.W_valM(W_valM),.W_icode(W_icode),.M_valA(M_valA),.M_Cnd(M_Cnd),.M_icode(M_icode));
+        pc_predic PCP(.predPC(f_predPC),.icode(f_icode),.valC(f_valC),.valP(f_valP));
+        
         instruction_memory IM(.byte19(Byte[71:0]),.byte0(Byte[79:72]),.imem_err(imem_err),.clk(clk),.wEn(1'b0),.PC(PC));
         split Sp(.need_regids(need_regids),.need_valC(need_valC),.Instr_valid(Instr_valid) ,.icode(icode),.ifun(ifun),.Byte0(Byte[79:72]),.imem_err(imem_err));
         align Al(.rA(rA),.rB(rB),.valC(valC),.Byte19(Byte[71:0]),.need_regids(need_regids));
         pcIncrement PCI (.valP(valP),.need_regids(need_regids),.need_valC(need_valC),.PC(PC));
+        
+        //INSERT stat combination
+        
+        //******************************************************************************************************************************************************//
+        //DECODE STAGE
+        pipe_reg D (
+        .stat(f_stat),
+        .icode(f_icode),
+        .ifun(f_ifun),
+        .rA(f_rA),
+        .rB(f_rB),
+        .valC(f_valC),
+        .valP(f_valP),
 
-        pipe_reg D (.stat(stat),.icode(D_icode),.ifun(ifun),.rA(rA),.rB(rB),.valC(valC),.valP(valP),.bubble(D_bubble),.stall(D_stall));
+        .o_stat(E_stat),
+        .o_icode(E_icode),
+        .o_ifun(D_ifun),
+        .o_rA(D_rA),
+        .o_rB(D_rB),
+        .o_valC(D_valC),
+        .o_valP(D_valP)
+            );
         
         //Register File
         RegFile RF (.valA(valA),.valB(valB),.valM(valM),.valE(valE),.icode(icode),.clk(clk),.cnd(cnd),.rA(rA),.rB(rB));
-
-        pipe_reg E (
-        .o_stat(D_stat),
-        .o_icode(D_icode),
-        .o_ifun(D_ifun),
-        .o_valC(D_valC),
-        .o_valA(D_valA),
-        .o_valB(D_valB),
-        .o_bubble(D_bubble),
-        .o_dstE(D_dstE),
-        .o_dstM(D_dstM),
-        .o_srcA(d_srcA),
-        .o_srcB(d_srcB));
-
+        //******************************************************************************************************************************************************//
         //Execute
-        ALU_fun #(.N(64)) ALU(.valE(valE),.cnd(cnd),.icode(icode),.ifun(ifun),.valA(valA),.valB(valB),.valC(valC),.clk(clk));
+        pipe_reg E (
+        .stat(D_stat),
+        .icode(D_icode),
+        .ifun(D_ifun),
+        .valC(D_valC),
+        .valA(d_valA),
+        .valB(d_valB),
+        .bubble(E_bubble),
+        .stall(E_stall),
+        .dstE(d_dstE),
+        .dstM(d_dstM),
+        .srcA(d_srcA),
+        .srcB(d_srcB),
+        .stat(D_stat),
 
+        .o_stat(E_stat),
+        .o_icode(E_icode),
+        .o_ifun(E_ifun),
+        .o_valC(E_valC),
+        .o_valA(E_valA),
+        .o_valB(E_valB),
+        
+        .o_dstE(E_dstE),
+        .o_dstM(E_dstM),
+        .o_srcA(E_srcA),
+        .o_srcB(E_srcB)
+        
+        );
+
+        ALU_fun #(.N(64)) ALU(.valE(valE),.cnd(cnd),.icode(icode),.ifun(ifun),.valA(valA),.valB(valB),.valC(valC),.clk(clk));
+        //******************************************************************************************************************************************************//
+        //MEMORY STAGE
+        pipe_reg M (
+        .stat(E_stat),
+        .icode(E_icode),
+        .cnd(e_Cnd),
+        .valE(valE),
+        .valA(d_valB),
+        .bubble(M_bubble),
+        .stall(M_bubble),
+        .dstE(d_dstE),
+        .dstM(d_dstM),
+        .srcA(d_srcA),
+        .srcB(d_srcB),
+        .stat(D_stat),
+
+        .o_stat(E_stat),
+        .o_icode(E_icode),
+        .o_ifun(E_ifun),
+        .o_valC(E_valC),
+        .o_valA(E_valA),
+        .o_valB(E_valB),
+        
+        .o_dstE(E_dstE),
+        .o_dstM(E_dstM),
+        .o_srcA(E_srcA),
+        .o_srcB(E_srcB)
+        
+        );
         //DataMemory
         DataWrap Dm (.valM(valM),.stat(stat),.valE(valE),.valA(valA),.valP(valP),.icode(icode),.Instr_valid(Instr_valid),.imem_error(imem_err),.clk(clk),.rst(1'b0));
 
