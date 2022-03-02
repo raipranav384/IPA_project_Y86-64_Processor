@@ -66,7 +66,9 @@ module DataWrap (
             end
         endcase
         // dmem_err<=(inAdd+7>=65536)||(rEn&wEn);   //Add is the LSB
-        dmem_err<=(inAdd>=65536)||(rEn&wEn);        //Add points to MSB
+        // dmem_err<=(inAdd+7>=65536)||(rEn&wEn);        //Add points to MSB
+        dmem_err<=(inAdd+7>=16384)||(rEn&wEn);        //Add points to MSB, reduced memory
+
         if(icode==0)
             stat<=2'd1;
         else if(dmem_err==1||imem_error==1)

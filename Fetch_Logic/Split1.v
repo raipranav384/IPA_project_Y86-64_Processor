@@ -41,7 +41,7 @@ module split(
         
         else
             need_regids<=1'b0;
-        if((icode==3 || icode==4 )||(icode==7 || icode==8))
+        if((icode==3 || icode==4 )||icode==5||(icode==7 || icode==8))
         
              need_valC<=1'b1;
         

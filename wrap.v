@@ -3,9 +3,9 @@
 `include "Fetch_Logic/Align.v"
 `include "Fetch_Logic/pc_increment.v"
 `include "ALU_Logic/ALU_func.v"
-`include "RegisterFile/registerfile.v"
+`include "RegisterFile/registerfile1.v"
 `include "Data_mem/Data_memWrap.v"
-`include "PC_update.v"
+`include "PC_update/PC_update.v"
 
 
 

@@ -64,7 +64,7 @@ module ALU_fun #(
             end
         4:  begin   //rmmovq
                 a<=valC;
-                b<=valA;
+                b<=valB;
                 c<=2'b00;
                 
             end
@@ -86,6 +86,11 @@ module ALU_fun #(
                 c<=2'b01;
                 
             end
+        9: begin
+                a<=valB;
+                b<=64'd8;
+                c<=2'b00;
+        end
         11:  begin  //popq
                 a<=valB;
                 b<=64'd8;

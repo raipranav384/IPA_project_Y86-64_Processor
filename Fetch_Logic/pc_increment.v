@@ -19,7 +19,7 @@ begin
     begin
     valP<=PC+9;
     end
-    else if (~need_regids&need_valC)
+    else if (~need_regids&~need_valC)
     begin
     valP<=PC+1;
     end

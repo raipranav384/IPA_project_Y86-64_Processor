@@ -7,11 +7,11 @@ module cond (
     //not equal
     not(zfbar,CF[1]);
     //greater than and greater than or equal to
-    nor(ge,CF[2],CF[0]);
+    xnor(ge,CF[2],CF[0]);
     and(g,ge,zfbar);
 
     //less than and less than or euqal to
-    or(l,CF[2],CF[0]);
+    xor(l,CF[2],CF[0]);
     or(le,l,CF[1]);
 
     always @*
