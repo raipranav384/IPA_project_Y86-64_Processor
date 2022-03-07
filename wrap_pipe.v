@@ -4,9 +4,12 @@
 `include "Fetch_Logic/predict_pc.v"
 `include "Fetch_Logic/select_pc.v"
 `include "Fetch_Logic/pc_increment.v"
+`include "Fetch_Logic/F_status.v"
 `include "ALU_Logic/ALU_func.v"
-`include "RegisterFile/registerfile1.v"
+`include "RegisterFile/registerFile2.v"
+`include "RegisterFile/dst_srcLogic.v"
 `include "Data_mem/Data_memWrap.v"
+`include "Data_mem/M_status.v"
 `include "PC_update/PC_update.v"
 `include "Pipelined/Pipeline_logic.v"
 `include "Pipelined/pipe_reg.v"
@@ -53,6 +56,8 @@ reg [7:0]in; //for loading to the instruction memory
     wire [63:0]D_valP;
     wire [63:0]d_valA;
     wire [63:0]d_valB;
+    wire [63:0]d_rvalA;
+    wire [63:0]d_rvalB;
     wire [3:0]d_dstE;
     wire [3:0]d_dstM;
     wire [3:0]d_srcA;
@@ -72,7 +77,7 @@ reg [7:0]in; //for loading to the instruction memory
     wire [3:0]E_srcB;
 
     wire [3:0]e_dstE;
-    wire [2:0]e_Cnd;
+    wire e_Cnd;
     wire [63:0]e_valE;
 
     //for memory
@@ -80,20 +85,21 @@ reg [7:0]in; //for loading to the instruction memory
     wire [1:0]M_stat;
     wire [3:0]M_icode;
     wire [3:0]M_ifun;
-    wire [2:0]M_Cnd;
+    wire M_Cnd;
     wire [63:0]M_valE;
     wire [63:0]M_valA;
     wire [3:0]M_dstE;
     wire [3:0]M_dstM;
     
     wire [1:0]m_stat;
+    wire [1:0]m_rstat;
     wire [63:0]m_valM;
     
     //for Write back
     wire W_stall,W_bubble;
     wire [1:0]W_stat;
     wire [3:0]W_icode;
-    wire [2:0]W_cnd;
+    wire W_cnd;
     wire [63:0]W_valE;
     wire [63:0]W_valM;
     wire [3:0]W_dstE;
@@ -123,8 +129,8 @@ reg [7:0]in; //for loading to the instruction memory
         //PC_update PCU(.PC(PC),.icode(icode),.cnd(cnd),.valC(valC),.valM(valM),.valP(valP),.stat(stat),.clk(clk));
         //FETCH STAGE
         pipe_reg F(
-            .o_pred_PC(f_predPC),
-            .pred_PC(F_predPC)
+            .o_pred_PC(F_predPC),
+            .pred_PC(f_predPC)
         );
         //Fetch
         Sel_PC selP(.f_pc(f_pc),.F_predPC(F_predPC),.W_valM(W_valM),.W_icode(W_icode),.M_valA(M_valA),.M_Cnd(M_Cnd),.M_icode(M_icode));
@@ -135,6 +141,9 @@ reg [7:0]in; //for loading to the instruction memory
         pcIncrement PCI (.valP(f_valP),.need_regids(f_need_regids),.need_valC(f_need_valC),.PC(f_pc));
         predict_pc PCP(.predPC(f_predPC),.icode(f_icode),.valC(f_valC),.valP(f_valP));
         
+        f_status F_stat(
+        .f_stat(f_stat),.icode(f_icode),.imem_error(f_imem_err),.Instr_valid(f_Instr_valid)
+        );
         //INSERT stat combination
         
     //******************************************************************************************************************************************************//
@@ -148,8 +157,8 @@ reg [7:0]in; //for loading to the instruction memory
         .valC(f_valC),
         .valP(f_valP),
 
-        .o_stat(E_stat),
-        .o_icode(E_icode),
+        .o_stat(D_stat),
+        .o_icode(D_icode),
         .o_ifun(D_ifun),
         .o_rA(D_rA),
         .o_rB(D_rB),
@@ -158,7 +167,16 @@ reg [7:0]in; //for loading to the instruction memory
             );
         
         //Register File
-        RegFile RF (.valA(valA),.valB(valB),.valM(valM),.valE(valE),.icode(icode),.clk(clk),.cnd(cnd),.rA(rA),.rB(rB));
+        // RegFile RF (.valA(d_rvalA),.valB(d_rvalB),.valM(W_valM),.valE(W_valE),.icode(icode),.clk(clk),.cnd(cnd),.rA(rA),.rB(rB),.srcA(d_srcA),.srcB(d_srcB),.dstE(d_dstE),.dstM(d_dstE));
+        dst_src DST_SRC(
+    .dstE(d_dstE),.dstM(d_dstM),.srcA(d_srcA),.srcB(d_srcB),
+    .icode(D_icode),
+    .rA(D_rA),.rB(D_rB),    
+    .cnd(1'b1)      //cnd variable passed as one, so later we can acutally select to keep value of dstE, or disregard it, depending on cnd
+);
+        
+        RegFile RF (.valA(d_rvalA),.valB(d_rvalB),.valM(W_valM),.valE(W_valE),.clk(clk),.srcA(d_srcA),.srcB(d_srcB),.dstE(d_dstE),.dstM(d_dstE));
+
     //******************************************************************************************************************************************************//
         //Execute
         pipe_reg E (
@@ -189,7 +207,8 @@ reg [7:0]in; //for loading to the instruction memory
         
         );
 
-        ALU_fun #(.N(64)) ALU(.valE(valE),.cnd(cnd),.icode(icode),.ifun(ifun),.valA(valA),.valB(valB),.valC(valC),.clk(clk));
+        ALU_fun #(.N(64)) ALU(.valE(e_valE),.cnd(e_Cnd),.icode(E_icode),.ifun(E_ifun),.valA(E_valA),.valB(E_valB),.valC(E_valC),.clk(clk));
+        assign e_dstE=e_Cnd?e_dstE:4'd15;   //Now the value is corrected;
     //******************************************************************************************************************************************************//
         //MEMORY STAGE
         pipe_reg M (
@@ -197,7 +216,7 @@ reg [7:0]in; //for loading to the instruction memory
         .icode(E_icode),
         .cnd(e_Cnd),
         .valE(e_valE),
-        .valA(E_valB),
+        .valA(E_valA),
         .bubble(M_bubble),
         .stall(M_bubble),
         .dstE(e_dstE),
@@ -208,14 +227,17 @@ reg [7:0]in; //for loading to the instruction memory
         .o_icode(M_icode),
         .o_cnd(M_Cnd),
         .o_valE(M_valE),
-        .o_valA(M_valB),
+        .o_valA(M_valA),
         .o_dstE(M_dstE),
         .o_dstM(M_dstM)
         
         );
         //DataMemory
-        DataWrap Dm (.valM(valM),.stat(stat),.valE(valE),.valA(valA),.valP(valP),.icode(icode),.Instr_valid(Instr_valid),.imem_error(imem_err),.clk(clk),.rst(1'b0));
-
+        DataWrap Dm (.valM(m_valM),.stat(m_rstat),.valE(valE),.valA(valA),.valP(valP),.icode(icode),.Instr_valid(1'b1),.imem_error(1'b0),.clk(clk),.rst(1'b0));
+        //imem_error passed 1, to make stat 2 only because of dmem error
+        //m_stat:
+        assign m_stat=(m_rstat==2&&M_stat!=1)?m_rstat:M_stat;
+        // M_status Mstat(.m_stat(m_stat),.m_rstat(m_rstat),.M_stat(M_stat));
     //******************************************************************************************************************************************************//
        //WRITE BACK STAGE
        pipe_reg W (
@@ -227,8 +249,8 @@ reg [7:0]in; //for loading to the instruction memory
         .stall(W_bubble),
         .dstE(M_dstE),
         .dstM(M_dstM),
-        
-        .o_stat(W__stat),
+
+        .o_stat(W_stat),
         .o_icode(W_icode),
         .o_valE(W_valE),
         .o_valM(W_valM),
@@ -238,7 +260,7 @@ reg [7:0]in; //for loading to the instruction memory
     //******************************************************************************************************************************************************//
         
 
-        assign PCt=PC;
+        assign PCt=f_pc;
         
 // always @(stat==0)
 //     begin
