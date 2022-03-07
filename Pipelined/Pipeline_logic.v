@@ -1,7 +1,8 @@
 module pipe_Logic (
     output reg W_stall,M_bubble,E_bubble,D_bubble,D_stall,F_stall,set_cc,
     input [3:0]D_icode,M_icode,E_icode,d_srcB,d_srcA,E_dstM,
-    input W_stat,m_stat,e_Cnd
+    input [1:0]W_stat,m_stat,
+    input e_Cnd
 );
     always @ *
     begin

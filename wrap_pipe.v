@@ -8,6 +8,8 @@
 `include "ALU_Logic/ALU_func.v"
 `include "RegisterFile/registerFile2.v"
 `include "RegisterFile/dst_srcLogic.v"
+`include "RegisterFile/selFwdA.v"
+`include "RegisterFile/selFwdB.v"
 `include "Data_mem/Data_memWrap.v"
 `include "Data_mem/M_status.v"
 `include "PC_update/PC_update.v"
@@ -174,14 +176,46 @@ reg [7:0]in; //for loading to the instruction memory
         //Register File
         // RegFile RF (.valA(d_rvalA),.valB(d_rvalB),.valM(W_valM),.valE(W_valE),.icode(icode),.clk(clk),.cnd(cnd),.rA(rA),.rB(rB),.srcA(d_srcA),.srcB(d_srcB),.dstE(d_dstE),.dstM(d_dstE));
         dst_src DST_SRC(
-    .dstE(d_dstE),.dstM(d_dstM),.srcA(d_srcA),.srcB(d_srcB),
-    .icode(D_icode),
-    .rA(D_rA),.rB(D_rB),    
-    .cnd(1'b1)      //cnd variable passed as one, so later we can acutally select to keep value of dstE, or disregard it, depending on cnd
-);
+            .dstE(d_dstE),.dstM(d_dstM),.srcA(d_srcA),.srcB(d_srcB),
+            .icode(D_icode),
+            .rA(D_rA),.rB(D_rB),    
+            .cnd(1'b1)      //cnd variable passed as one, so later we can acutally select to keep value of dstE, or disregard it, depending on cnd
+        );
         
         RegFile RF (.valA(d_rvalA),.valB(d_rvalB),.valM(W_valM),.valE(W_valE),.clk(clk),.srcA(d_srcA),.srcB(d_srcB),.dstE(d_dstE),.dstM(d_dstE));
 
+        fwd_selA FWselA (
+            .d_valA(d_valA),
+            .D_icode(D_icode),
+            .D_valP(D_valP),
+            .d_rvalA(d_rvalA),
+            .d_srcA(d_srcA),
+            .W_valE(W_valE),
+            .W_dstE(W_dstE),
+            .W_valM(W_valM),
+            .W_dstM(W_dstM),
+            .m_valM(m_valM),
+            .M_dstM(M_dstM),
+            .M_valE(M_valE),
+            .M_dstE(M_dstE),
+            .e_valE(e_valE),
+            .e_dstE(e_dstE)
+        );
+        fwd_selB FWselB (
+            .d_valB(d_valB),
+            .d_rvalB(d_rvalB),
+            .d_srcB(d_srcB),
+            .W_valE(W_valE),
+            .W_dstE(W_dstE),
+            .W_valM(W_valM),
+            .W_dstM(W_dstM),
+            .m_valM(m_valM),
+            .M_dstM(M_dstM),
+            .M_valE(M_valE),
+            .M_dstE(M_dstE),
+            .e_valE(e_valE),
+            .e_dstE(e_dstE)
+        );
     //******************************************************************************************************************************************************//
         //Execute
         pipe_reg E (

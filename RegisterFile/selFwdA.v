@@ -1,4 +1,4 @@
-module fwd_sel(
+module fwd_selA(
     output reg [63:0]d_valA,
     input [3:0]D_icode,
     input [63:0]D_valP,
