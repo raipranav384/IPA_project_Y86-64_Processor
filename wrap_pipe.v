@@ -128,6 +128,11 @@ reg [7:0]in; //for loading to the instruction memory
         //     );
         //PC_update PCU(.PC(PC),.icode(icode),.cnd(cnd),.valC(valC),.valM(valM),.valP(valP),.stat(stat),.clk(clk));
         //FETCH STAGE
+        pipe_Logic PLogic(
+        .W_stall(W_stall),.M_bubble(M_bubble),.E_bubble(E_bubble),.D_bubble(D_bubble),.D_stall(D_stall),.F_stall(F_stall),.set_cc(set_cc),
+        .D_icode(D_icode),.M_icode(M_icode),.E_icode(E_icode),.d_srcB(d_srcB),.d_srcA(d_srcA),.E_dstM(E_dstE),
+        .W_stat(W_stat),.m_stat(m_stat),.e_Cnd(e_Cnd)
+        );
         pipe_reg F(
             .o_pred_PC(F_predPC),
             .pred_PC(f_predPC)
