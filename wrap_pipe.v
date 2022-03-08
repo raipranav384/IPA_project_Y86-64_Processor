@@ -18,17 +18,18 @@
 
 
 
-module y86wrap (
-    output [79:0]Byte,
-    output [63:0]valM,valE,valC,valP,valA,valB,
-    output [3:0] icode,ifun,rA,rB,
-    output cnd,imem_err,Instr_valid,need_regids,need_valC,
-    output [1:0]stat,
-    output [63:0]PCt,
+module y86wrapPipe (
+    output [79:0]f_Byte,
+    output  [63:0]f_pc,f_predPC,D_valC,D_valP,E_valA,E_valB,M_valA,F_predPC,M_valE,W_valE,W_valM,
+    output [3:0] f_icode,D_icode,D_ifun,D_rA,D_rB,E_icode,E_ifun,E_dstE,E_dstM,E_srcA,E_srcB,
+    M_icode,M_dstE,M_dstM,W_icode,W_dstE,W_dstM,
+    output M_Cnd,F_stall,
+    output [1:0]D_stat,E_stat,M_stat,W_stat,
+    // output [63:0]PCt,
     input clk
 );
 
-reg [7:0]in; //for loading to the instruction memory
+//reg [7:0]in; //for loading to the instruction memory
 
 
 // Required Wires
@@ -136,8 +137,11 @@ reg [7:0]in; //for loading to the instruction memory
         .W_stat(W_stat),.m_stat(m_stat),.e_Cnd(e_Cnd)
         );
         pipe_reg F(
+            .bubble(1'b0),
+            .stall(F_stall),
             .o_pred_PC(F_predPC),
-            .pred_PC(f_predPC)
+            .pred_PC(f_predPC),
+            .clk(clk)
         );
         //Fetch
         Sel_PC selP(.f_pc(f_pc),.F_predPC(F_predPC),.W_valM(W_valM),.W_icode(W_icode),.M_valA(M_valA),.M_Cnd(M_Cnd),.M_icode(M_icode));
@@ -163,6 +167,9 @@ reg [7:0]in; //for loading to the instruction memory
         .rB(f_rB),
         .valC(f_valC),
         .valP(f_valP),
+        
+        .bubble(D_bubble),
+        .stall(D_stall),
 
         .o_stat(D_stat),
         .o_icode(D_icode),
@@ -170,7 +177,8 @@ reg [7:0]in; //for loading to the instruction memory
         .o_rA(D_rA),
         .o_rB(D_rB),
         .o_valC(D_valC),
-        .o_valP(D_valP)
+        .o_valP(D_valP),
+        .clk(clk)
             );
         
         //Register File
@@ -225,8 +233,10 @@ reg [7:0]in; //for loading to the instruction memory
         .valC(D_valC),
         .valA(d_valA),
         .valB(d_valB),
+
         .bubble(E_bubble),
-        .stall(E_stall),
+        .stall(1'b0),   //Not stalled
+        
         .dstE(d_dstE),
         .dstM(d_dstM),
         .srcA(d_srcA),
@@ -242,7 +252,8 @@ reg [7:0]in; //for loading to the instruction memory
         .o_dstE(E_dstE),
         .o_dstM(E_dstM),
         .o_srcA(E_srcA),
-        .o_srcB(E_srcB)
+        .o_srcB(E_srcB),
+        .clk(clk)
         
         );
 
@@ -256,8 +267,10 @@ reg [7:0]in; //for loading to the instruction memory
         .cnd(e_Cnd),
         .valE(e_valE),
         .valA(E_valA),
+
         .bubble(M_bubble),
-        .stall(M_bubble),
+        .stall(1'b0),   //Not stalled
+        
         .dstE(e_dstE),
         .dstM(E_dstM),
         
@@ -268,11 +281,12 @@ reg [7:0]in; //for loading to the instruction memory
         .o_valE(M_valE),
         .o_valA(M_valA),
         .o_dstE(M_dstE),
-        .o_dstM(M_dstM)
+        .o_dstM(M_dstM),
+        .clk(clk)
         
         );
         //DataMemory
-        DataWrap Dm (.valM(m_valM),.stat(m_rstat),.valE(valE),.valA(valA),.valP(valP),.icode(icode),.Instr_valid(1'b1),.imem_error(1'b0),.clk(clk),.rst(1'b0));
+        DataWrap Dm (.valM(m_valM),.stat(m_rstat),.valE(M_valE),.valA(M_valA),.valP(M_valA),.icode(M_icode),.Instr_valid(1'b1),.imem_error(1'b0),.clk(clk),.rst(1'b0));
         //imem_error passed 1, to make stat 2 only because of dmem error
         //m_stat:
         assign m_stat=(m_rstat==2&&M_stat!=1)?m_rstat:M_stat;
@@ -284,8 +298,10 @@ reg [7:0]in; //for loading to the instruction memory
         .icode(M_icode),
         .valE(M_valE),
         .valM(m_valM),
-        .bubble(W_bubble),
-        .stall(W_bubble),
+
+        .bubble(1'b0),
+        .stall(W_stall),
+        
         .dstE(M_dstE),
         .dstM(M_dstM),
 
@@ -294,12 +310,13 @@ reg [7:0]in; //for loading to the instruction memory
         .o_valE(W_valE),
         .o_valM(W_valM),
         .o_dstE(W_dstE),
-        .o_dstM(W_dstM)
+        .o_dstM(W_dstM),
+        .clk(clk)
         );
     //******************************************************************************************************************************************************//
         
 
-        assign PCt=f_pc;
+        // assign PCt=f_pc;
         
 // always @(stat==0)
 //     begin

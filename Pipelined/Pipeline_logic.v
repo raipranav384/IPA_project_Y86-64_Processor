@@ -22,6 +22,18 @@ module pipe_Logic (
         if(((E_icode==4'd7)&&~e_Cnd)||(((E_icode==4'd5)||(E_icode==4'd11))&&(E_dstM==d_srcA||E_dstM==d_srcB)))
             E_bubble<=1'b1;
         else
-            E_bubble<=1'b1;
+            E_bubble<=1'b0;
+        if(W_stat!=2'b0)
+            W_stall<=1'b1;
+        else
+            W_stall<=1'b0;
+        if(m_stat!=2'b00||W_stat!=2'b00)
+            M_bubble<=1'b1;
+        else
+            M_bubble<=1'b0;
+        if(E_icode==4'd6&&!(m_stat!=2'b00||W_stat!=2'b00))
+            set_cc<=1'b1;
+        else
+            set_cc<=1'b0;
     end
 endmodule

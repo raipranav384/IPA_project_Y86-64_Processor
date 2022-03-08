@@ -37,39 +37,10 @@ module pipe_reg (
     input [3:0]srcB,
     input clk
 );
+    reg [482:0]pipeReg;
+
     initial begin
         pipeReg[79:16]<=64'd0;
-    end
-    reg [482:0]pipeReg;
-    always @(posedge clk)
-    begin
-        if(~bubble&~stall)
-        begin
-        pipeReg[482:481]<=stat;
-        pipeReg[480:477]<=icode;
-        pipeReg[476:473]<=ifun;
-        pipeReg[472]    <=cnd;
-        pipeReg[471:468]<=rA;
-        pipeReg[467:464]<=rB;
-        pipeReg[463:400]<=valC;
-        pipeReg[399:336]<=valE;// INSERT VALM
-        pipeReg[335:272]<=valM;
-        pipeReg[271:208]<=valA;
-        pipeReg[207:144]<=valB;
-        pipeReg[143:80] <=valP;
-        pipeReg[79:16]  <=pred_PC;
-        pipeReg[15:12]  <=dstE;
-        pipeReg[11:8]   <=dstM;
-        pipeReg[7:3]    <=srcA;
-        pipeReg[3:0]    <=srcB;
-        end
-        if(~stall&bubble)
-        begin
-        pipeReg[482:481]<=stat;
-        pipeReg[480:477]<=4'd1;
-        pipeReg[476:473]<=4'd0;
-        end
-        //If this doesn't work for stall, add else if for that
     end
         assign o_stat      =pipeReg[482:481];
         assign o_icode     =pipeReg[480:477];
@@ -88,4 +59,55 @@ module pipe_reg (
         assign o_dstM      =pipeReg[11:8]   ;
         assign o_srcA      =pipeReg[7:3]    ;
         assign o_srcB      =pipeReg[3:0]    ;
+
+    always @(posedge clk)
+    begin
+        if(~bubble&stall)
+        begin
+        pipeReg[482:481]<=pipeReg[482:481];
+        pipeReg[480:477]<=pipeReg[480:477];
+        pipeReg[476:473]<=pipeReg[476:473];
+        pipeReg[472]    <=pipeReg[472]    ;
+        pipeReg[471:468]<=pipeReg[471:468];
+        pipeReg[467:464]<=pipeReg[467:464];
+        pipeReg[463:400]<=pipeReg[463:400];
+        pipeReg[399:336]<=pipeReg[399:336];
+        pipeReg[335:272]<=pipeReg[335:272];
+        pipeReg[271:208]<=pipeReg[271:208];
+        pipeReg[207:144]<=pipeReg[207:144];
+        pipeReg[143:80] <=pipeReg[143:80] ;
+        pipeReg[79:16]  <=pipeReg[79:16]  ;
+        pipeReg[15:12]  <=pipeReg[15:12]  ;
+        pipeReg[11:8]   <=pipeReg[11:8]   ;
+        pipeReg[7:3]    <=pipeReg[7:3]    ;
+        pipeReg[3:0]    <=pipeReg[3:0]    ;
+        end
+        else if(~stall&bubble)
+        begin
+        pipeReg[482:481]<=stat;
+        pipeReg[480:477]<=4'd1;
+        pipeReg[476:473]<=4'd0;
+        end
+        else
+        begin
+        pipeReg[482:481]<=stat;
+        pipeReg[480:477]<=icode;
+        pipeReg[476:473]<=ifun;
+        pipeReg[472]    <=cnd;
+        pipeReg[471:468]<=rA;
+        pipeReg[467:464]<=rB;
+        pipeReg[463:400]<=valC;
+        pipeReg[399:336]<=valE;
+        pipeReg[335:272]<=valM;
+        pipeReg[271:208]<=valA;
+        pipeReg[207:144]<=valB;
+        pipeReg[143:80] <=valP;
+        pipeReg[79:16]  <=pred_PC;
+        pipeReg[15:12]  <=dstE;
+        pipeReg[11:8]   <=dstM;
+        pipeReg[7:3]    <=srcA;
+        pipeReg[3:0]    <=srcB;
+        end
+        //If this doesn't work for stall, add else if for that
+    end
 endmodule
