@@ -111,14 +111,114 @@ initial begin
 // end
 
 // First instruction
-// First instruction
+// First instruction///////////////////////////////////////////////////////////////////////////////////
 //irmovq 3 0 F 4 14  //irmovq 3 0 F rB V
+// inst_memory[0][7:4]<=4'd3;
+// inst_memory[0][3:0]<=4'd0;
+// inst_memory[1][7:4]<=4'd15;
+// inst_memory[1][3:0]<=4'd4;
+// inst_memory[2][7:4]<=4'd0;
+// inst_memory[2][3:0]<=4'd14;
+// inst_memory[3][7:4]<=4'd0;
+// inst_memory[3][3:0]<=4'd0;
+// inst_memory[4][7:4]<=4'd0;
+// inst_memory[4][3:0]<=4'd0;
+// inst_memory[5][7:4]<=4'd0;
+// inst_memory[5][3:0]<=4'd0;
+// inst_memory[6][7:4]<=4'd0;
+// inst_memory[6][3:0]<=4'd0;
+// inst_memory[7][7:4]<=4'd0;
+// inst_memory[7][3:0]<=4'd0;
+// inst_memory[8][7:4]<=4'd0;
+// inst_memory[8][3:0]<=4'd0;
+// inst_memory[9][7:4]<=4'd0;
+// inst_memory[9][3:0]<=4'd0;
+
+// //Second instruction
+// //irmovq 3 0 F 8 6  //irmovq 3 0 F rB V
+// inst_memory[10+0][7:4]<=4'd3;
+// inst_memory[10+0][3:0]<=4'd0;
+// inst_memory[10+1][7:4]<=4'd15;
+// inst_memory[10+1][3:0]<=4'd8;
+// inst_memory[10+2][7:4]<=4'd0;
+// inst_memory[10+2][3:0]<=4'd6;
+// inst_memory[10+3][7:4]<=4'd0;
+// inst_memory[10+3][3:0]<=4'd0;
+// inst_memory[10+4][7:4]<=4'd0;
+// inst_memory[10+4][3:0]<=4'd0;
+// inst_memory[10+5][7:4]<=4'd0;
+// inst_memory[10+5][3:0]<=4'd0;
+// inst_memory[10+6][7:4]<=4'd0;
+// inst_memory[10+6][3:0]<=4'd0;
+// inst_memory[10+7][7:4]<=4'd0;
+// inst_memory[10+7][3:0]<=4'd0;
+// inst_memory[10+8][7:4]<=4'd0;
+// inst_memory[10+8][3:0]<=4'd0;
+// inst_memory[10+9][7:4]<=4'd0;
+// inst_memory[10+9][3:0]<=4'd0;
+
+// //Third instruction
+// //opq 6 1 4 8
+// inst_memory[20+0][7:4]<=4'd6;
+// inst_memory[20+0][3:0]<=4'd1;
+// inst_memory[20+1][7:4]<=4'd4;
+// inst_memory[20+1][3:0]<=4'd8;
+
+// //Fourth instrucion
+// //cmovXX 2 5 4 8
+// inst_memory[22+0][7:4]<=4'd2;
+// inst_memory[22+0][3:0]<=4'd2;
+// inst_memory[22+1][7:4]<=4'd4;
+// inst_memory[22+1][3:0]<=4'd8;
+
+// //Fifth instruction
+// //opq 6 0 4 8
+// inst_memory[24+0][7:4]<=4'd6;
+// inst_memory[24+0][3:0]<=4'd0;
+// inst_memory[24+1][7:4]<=4'd4;
+// inst_memory[24+1][3:0]<=4'd8;
+
+// //Sixth instruction
+// //jmp 7 5 38
+// inst_memory[26+0][7:4]<=4'd7;
+// inst_memory[26+0][3:0]<=4'd5;
+// inst_memory[26+1][7:4]<=4'd2;
+// inst_memory[26+1][3:0]<=4'd6;
+// inst_memory[26+2][7:4]<=4'd0;
+// inst_memory[26+2][3:0]<=4'd0;
+// inst_memory[26+3][7:4]<=4'd0;
+// inst_memory[26+3][3:0]<=4'd0;
+// inst_memory[26+4][7:4]<=4'd0;
+// inst_memory[26+4][3:0]<=4'd0;
+// inst_memory[26+5][7:4]<=4'd0;
+// inst_memory[26+5][3:0]<=4'd0;
+// inst_memory[26+6][7:4]<=4'd0;
+// inst_memory[26+6][3:0]<=4'd0;
+// inst_memory[26+7][7:4]<=4'd0;
+// inst_memory[26+7][3:0]<=4'd0;
+// inst_memory[26+8][7:4]<=4'd0;
+// inst_memory[26+8][3:0]<=4'd0;
+
+// //Sixth instrcution
+// //opq 6 0 4 8
+// inst_memory[38+0][7:4]<=4'd6;
+// inst_memory[38+0][3:0]<=4'd0;
+// inst_memory[38+1][7:4]<=4'd4;
+// inst_memory[38+1][3:0]<=4'd8;
+
+// //Seventh instrcution
+// //halt 0 0
+// inst_memory[40+0][7:4]<=4'd0;
+// inst_memory[40+0][3:0]<=4'd0;
+//////////////////////////////////////////////////////////
+// First instruction
+//irmovq 3 0 F 11 5  //irmovq 3 0 F rB V
 inst_memory[0][7:4]<=4'd3;
 inst_memory[0][3:0]<=4'd0;
 inst_memory[1][7:4]<=4'd15;
-inst_memory[1][3:0]<=4'd4;
+inst_memory[1][3:0]<=4'd11;
 inst_memory[2][7:4]<=4'd0;
-inst_memory[2][3:0]<=4'd14;
+inst_memory[2][3:0]<=4'd5;
 inst_memory[3][7:4]<=4'd0;
 inst_memory[3][3:0]<=4'd0;
 inst_memory[4][7:4]<=4'd0;
@@ -134,14 +234,14 @@ inst_memory[8][3:0]<=4'd0;
 inst_memory[9][7:4]<=4'd0;
 inst_memory[9][3:0]<=4'd0;
 
-//Second instruction
-//irmovq 3 0 F 8 6  //irmovq 3 0 F rB V
+// Second instruction
+//irmovq 3 0 15 10 10 //irmovq 3 0 F rB V
 inst_memory[10+0][7:4]<=4'd3;
 inst_memory[10+0][3:0]<=4'd0;
 inst_memory[10+1][7:4]<=4'd15;
-inst_memory[10+1][3:0]<=4'd8;
+inst_memory[10+1][3:0]<=4'd10;
 inst_memory[10+2][7:4]<=4'd0;
-inst_memory[10+2][3:0]<=4'd6;
+inst_memory[10+2][3:0]<=4'd10;
 inst_memory[10+3][7:4]<=4'd0;
 inst_memory[10+3][3:0]<=4'd0;
 inst_memory[10+4][7:4]<=4'd0;
@@ -157,59 +257,93 @@ inst_memory[10+8][3:0]<=4'd0;
 inst_memory[10+9][7:4]<=4'd0;
 inst_memory[10+9][3:0]<=4'd0;
 
-//Third instruction
-//opq 6 1 4 8
+//3rd instruction
+//opq  6 0 11 10 //opq 6 0 rA rB  0 meaning add
 inst_memory[20+0][7:4]<=4'd6;
-inst_memory[20+0][3:0]<=4'd1;
-inst_memory[20+1][7:4]<=4'd4;
-inst_memory[20+1][3:0]<=4'd8;
+inst_memory[20+0][3:0]<=4'd0;
+inst_memory[20+1][7:4]<=4'd11;
+inst_memory[20+1][3:0]<=4'd10;
 
-//Fourth instrucion
-//cmovXX 2 5 4 8
-inst_memory[22+0][7:4]<=4'd2;
-inst_memory[22+0][3:0]<=4'd2;
-inst_memory[22+1][7:4]<=4'd4;
-inst_memory[22+1][3:0]<=4'd8;
+//3.5
+//irmovq 3 0 15 6 5 //irmovq 3 0 F rB V
+inst_memory[22+0][7:4]<=4'd3;
+inst_memory[22+0][3:0]<=4'd0;
+inst_memory[22+1][7:4]<=4'd15;
+inst_memory[22+1][3:0]<=4'd6;
+// inst_memory[22+2][7:4]<=4'd0;
+inst_memory[22+2][7:0]<=8'd5;
+// inst_memory[22+3][7:4]<=4'd0;
+inst_memory[22+3][7:0]<=8'd0;
+inst_memory[22+4][7:4]<=4'd0;
+inst_memory[22+4][3:0]<=4'd0;
+inst_memory[22+5][7:4]<=4'd0;
+inst_memory[22+5][3:0]<=4'd0;
+inst_memory[22+6][7:4]<=4'd0;
+inst_memory[22+6][3:0]<=4'd0;
+inst_memory[22+7][7:4]<=4'd0;
+inst_memory[22+7][3:0]<=4'd0;
+inst_memory[22+8][7:4]<=4'd0;
+inst_memory[22+8][3:0]<=4'd0;
+inst_memory[22+9][7:4]<=4'd0;
+inst_memory[22+9][3:0]<=4'd0;
 
-//Fifth instruction
-//opq 6 0 4 8
-inst_memory[24+0][7:4]<=4'd6;
-inst_memory[24+0][3:0]<=4'd0;
-inst_memory[24+1][7:4]<=4'd4;
-inst_memory[24+1][3:0]<=4'd8;
+//4th instruction
+//rmmovq 4 0 10 6 0 //rmmovq 4 0 rA rB D 
+inst_memory[32+0][7:4]<=4'd4;
+inst_memory[32+0][3:0]<=4'd0;
+inst_memory[32+1][7:4]<=4'd10;
+inst_memory[32+1][3:0]<=4'd6;
+inst_memory[32+2][7:4]<=4'd0;
+inst_memory[32+2][3:0]<=4'd0;
+inst_memory[32+3][7:4]<=4'd0;
+inst_memory[32+3][3:0]<=4'd0;
+inst_memory[32+4][7:4]<=4'd0;
+inst_memory[32+4][3:0]<=4'd0;
+inst_memory[32+5][7:4]<=4'd0;
+inst_memory[32+5][3:0]<=4'd0;
+inst_memory[32+6][7:4]<=4'd0;
+inst_memory[32+6][3:0]<=4'd0;
+inst_memory[32+7][7:4]<=4'd0;
+inst_memory[32+7][3:0]<=4'd0;
+inst_memory[32+8][7:4]<=4'd0;
+inst_memory[32+8][3:0]<=4'd0;
+inst_memory[32+9][7:4]<=4'd0;
+inst_memory[32+9][3:0]<=4'd0;
 
-//Sixth instruction
-//jmp 7 5 38
-inst_memory[26+0][7:4]<=4'd7;
-inst_memory[26+0][3:0]<=4'd5;
-inst_memory[26+1][7:4]<=4'd2;
-inst_memory[26+1][3:0]<=4'd6;
-inst_memory[26+2][7:4]<=4'd0;
-inst_memory[26+2][3:0]<=4'd0;
-inst_memory[26+3][7:4]<=4'd0;
-inst_memory[26+3][3:0]<=4'd0;
-inst_memory[26+4][7:4]<=4'd0;
-inst_memory[26+4][3:0]<=4'd0;
-inst_memory[26+5][7:4]<=4'd0;
-inst_memory[26+5][3:0]<=4'd0;
-inst_memory[26+6][7:4]<=4'd0;
-inst_memory[26+6][3:0]<=4'd0;
-inst_memory[26+7][7:4]<=4'd0;
-inst_memory[26+7][3:0]<=4'd0;
-inst_memory[26+8][7:4]<=4'd0;
-inst_memory[26+8][3:0]<=4'd0;
+//5th instruction
+//mrmovq 5 0 8 6 0 //mrmovq 5 0 rA rB D 
+inst_memory[42+0][7:4]<=4'd5;
+inst_memory[42+0][3:0]<=4'd0;
+inst_memory[42+1][7:4]<=4'd8;
+inst_memory[42+1][3:0]<=4'd6;
+inst_memory[42+2][7:4]<=4'd0;
+inst_memory[42+2][3:0]<=4'd0;
+inst_memory[42+3][7:4]<=4'd0;
+inst_memory[42+3][3:0]<=4'd0;
+inst_memory[42+4][7:4]<=4'd0;
+inst_memory[42+4][3:0]<=4'd0;
+inst_memory[42+5][7:4]<=4'd0;
+inst_memory[42+5][3:0]<=4'd0;
+inst_memory[42+6][7:4]<=4'd0;
+inst_memory[42+6][3:0]<=4'd0;
+inst_memory[42+7][7:4]<=4'd0;
+inst_memory[42+7][3:0]<=4'd0;
+inst_memory[42+8][7:4]<=4'd0;
+inst_memory[42+8][3:0]<=4'd0;
+inst_memory[42+9][7:4]<=4'd0;
+inst_memory[42+9][3:0]<=4'd0;
 
-//Sixth instrcution
-//opq 6 0 4 8
-inst_memory[38+0][7:4]<=4'd6;
-inst_memory[38+0][3:0]<=4'd0;
-inst_memory[38+1][7:4]<=4'd4;
-inst_memory[38+1][3:0]<=4'd8;
+//6rd instruction
+//opq  6 0 8 10 //opq 6 0 rA rB  0 meaning add
+inst_memory[52+0][7:4]<=4'd6;
+inst_memory[52+0][3:0]<=4'd0;
+inst_memory[52+1][7:4]<=4'd8;
+inst_memory[52+1][3:0]<=4'd10;
 
-//Seventh instrcution
+//7th instruction
 //halt 0 0
-inst_memory[40+0][7:4]<=4'd0;
-inst_memory[40+0][3:0]<=4'd0;
+inst_memory[54+0][7:4]<=4'd0;
+inst_memory[54+0][3:0]<=4'd0;
 end
 
 

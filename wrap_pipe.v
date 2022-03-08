@@ -20,10 +20,10 @@
 
 module y86wrapPipe (
     output [79:0]f_Byte,
-    output  [63:0]f_pc,f_predPC,D_valC,D_valP,d_rvalA,d_rvalB,E_valA,E_valB,M_valA,F_predPC,M_valE,W_valE,W_valM,e_valE,E_valC,d_valA,d_valB,
+    output  [63:0]f_pc,f_predPC,D_valC,D_valP,d_rvalA,d_rvalB,E_valA,E_valB,M_valA,F_predPC,M_valE,W_valE,W_valM,e_valE,E_valC,d_valA,d_valB,m_valM,
     output [3:0] f_icode,D_icode,D_ifun,D_rA,D_rB,E_icode,E_ifun,E_dstE,E_dstM,E_srcA,E_srcB,
     M_icode,M_dstE,M_dstM,W_icode,W_dstE,W_dstM,d_dstE,d_dstM,d_srcA,d_srcB,e_dstE,
-    output M_Cnd,F_stall,e_Cnd,
+    output M_Cnd,F_stall,e_Cnd,D_bubble,D_stall,E_bubble,M_bubble,W_stall,
     output [1:0]D_stat,E_stat,M_stat,W_stat,
     // output [63:0]PCt,
     input clk
@@ -133,7 +133,7 @@ module y86wrapPipe (
         //FETCH STAGE
         pipe_Logic PLogic(
         .W_stall(W_stall),.M_bubble(M_bubble),.E_bubble(E_bubble),.D_bubble(D_bubble),.D_stall(D_stall),.F_stall(F_stall),.set_cc(set_cc),
-        .D_icode(D_icode),.M_icode(M_icode),.E_icode(E_icode),.d_srcB(d_srcB),.d_srcA(d_srcA),.E_dstM(E_dstE),
+        .D_icode(D_icode),.M_icode(M_icode),.E_icode(E_icode),.d_srcB(d_srcB),.d_srcA(d_srcA),.E_dstM(E_dstM),
         .W_stat(W_stat),.m_stat(m_stat),.e_Cnd(e_Cnd)
         );
         pipe_reg F(
