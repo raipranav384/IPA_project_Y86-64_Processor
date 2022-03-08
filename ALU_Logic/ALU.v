@@ -22,11 +22,10 @@ module ALU #(
             2'b10: OUT<=OUT2;
             2'b11: OUT<=OUT3;
         endcase
-        
-        
     end
     // CF[1]=OUT==0?1:0;
     // CF[2]<=(OUT[N-1]==1)?1:0;
     assign CF[2]=OUT[N-1];
-    and (CF[1],OUT);
+    // or (CF[1],OUT);
+    assign CF[1]=OUT==0?1'b1:1'b0;
 endmodule

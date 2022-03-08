@@ -48,7 +48,6 @@ module ALU_fun #(
     // endgenerate
     always @*
     begin
-        set=0;
         case(icode)
         6:  begin   //opq
                 a<=valB;
@@ -60,53 +59,61 @@ module ALU_fun #(
                 a<=valC;
                 b<=64'd0;
                 c<=2'b00;
+                set<=0;
                 
             end
         4:  begin   //rmmovq
                 a<=valC;
                 b<=valB;
                 c<=2'b00;
+                set<=0;
                 
             end
         5:  begin   //mrmovq
                 a<=valB;
                 b<=valC;
                 c<=2'b00;
+                set<=0;
                 
             end
         2:  begin   //cmov
                 a<=64'd0;
                 b<=valA;
                 c<=2'b00;
+                set<=0;
                 
             end
         8:  begin   //call
                 a<=valB;
                 b<=64'd8;
                 c<=2'b01;
+                set<=0;
                 
             end
         9: begin
                 a<=valB;
                 b<=64'd8;
                 c<=2'b00;
+                set<=0;
         end
         11:  begin  //popq
                 a<=valB;
                 b<=64'd8;
                 c<=2'b00;
+                set<=0;
             end
         10:  begin  //pushq
                 a<=valB;
                 b<=64'd8;
                 c<=2'b01;
+                set<=0;
                 
             end
         default:  begin
                 a<=0;
                 b<=0;
                 c<=0;
-                
+                set<=0;
             end
         endcase
     end

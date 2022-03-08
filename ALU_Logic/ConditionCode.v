@@ -22,11 +22,14 @@ module regNbit #(
     always @(posedge clk)
     begin
         if(~reset)
-            out<=in;
+        begin
+            if(set)
+                out<=in;
+        end
         else
             out<=0;
     end
-    always @(negedge clk)
-        out<=in;
+    always @(negedge async_reset)
+        out<=0;
 
 endmodule
