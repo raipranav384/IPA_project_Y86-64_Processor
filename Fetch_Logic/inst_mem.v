@@ -167,7 +167,7 @@ inst_memory[20+1][3:0]<=4'd8;
 //Fourth instrucion
 //cmovXX 2 5 4 8
 inst_memory[22+0][7:4]<=4'd2;
-inst_memory[22+0][3:0]<=4'd5;
+inst_memory[22+0][3:0]<=4'd2;
 inst_memory[22+1][7:4]<=4'd4;
 inst_memory[22+1][3:0]<=4'd8;
 

@@ -20,10 +20,10 @@
 
 module y86wrapPipe (
     output [79:0]f_Byte,
-    output  [63:0]f_pc,f_predPC,D_valC,D_valP,E_valA,E_valB,M_valA,F_predPC,M_valE,W_valE,W_valM,e_valE,E_valC,d_valA,d_valB,
+    output  [63:0]f_pc,f_predPC,D_valC,D_valP,d_rvalA,d_rvalB,E_valA,E_valB,M_valA,F_predPC,M_valE,W_valE,W_valM,e_valE,E_valC,d_valA,d_valB,
     output [3:0] f_icode,D_icode,D_ifun,D_rA,D_rB,E_icode,E_ifun,E_dstE,E_dstM,E_srcA,E_srcB,
     M_icode,M_dstE,M_dstM,W_icode,W_dstE,W_dstM,d_dstE,d_dstM,d_srcA,d_srcB,e_dstE,
-    output M_Cnd,F_stall,
+    output M_Cnd,F_stall,e_Cnd,
     output [1:0]D_stat,E_stat,M_stat,W_stat,
     // output [63:0]PCt,
     input clk
@@ -190,7 +190,7 @@ module y86wrapPipe (
             .cnd(1'b1)      //cnd variable passed as one, so later we can acutally select to keep value of dstE, or disregard it, depending on cnd
         );
         
-        RegFile RF (.valA(d_rvalA),.valB(d_rvalB),.valM(W_valM),.valE(W_valE),.clk(clk),.srcA(d_srcA),.srcB(d_srcB),.dstE(d_dstE),.dstM(d_dstE));
+        RegFile RF (.valA(d_rvalA),.valB(d_rvalB),.valM(W_valM),.valE(W_valE),.clk(clk),.srcA(d_srcA),.srcB(d_srcB),.dstE(W_dstE),.dstM(W_dstM));
 
         fwd_selA FWselA (
             .d_valA(d_valA),

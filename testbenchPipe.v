@@ -5,18 +5,18 @@ module tb_wrap;
 reg clk;
 reg rst_n;
 wire [79:0]f_Byte;
-wire signed [63:0]f_pc,f_predPC,D_valC,D_valP,E_valA,E_valB,M_valA,F_predPC,M_valE,W_valE,W_valM,e_valE,E_valC,d_valA,d_valB;
+wire signed [63:0]f_pc,f_predPC,D_valC,D_valP,d_rvalA,d_rvalB,E_valA,E_valB,M_valA,F_predPC,M_valE,W_valE,W_valM,e_valE,E_valC,d_valA,d_valB;
 wire [3:0] f_icode,D_icode,D_ifun,D_rA,D_rB,E_icode,E_ifun,E_dstE,E_dstM,E_srcA,E_srcB,e_dstE,
 M_icode,M_dstE,M_dstM,W_icode,W_dstE,W_dstM,d_dstE,d_dstM,d_srcA,d_srcB;
-    wire M_Cnd,F_stall;
+    wire M_Cnd,F_stall,e_Cnd;
     wire [1:0]D_stat,E_stat,M_stat,W_stat;
 
 
 y86wrapPipe Ypipe(
-    f_Byte,f_pc,f_predPC,D_valC,D_valP,E_valA,E_valB,M_valA,F_predPC,M_valE,W_valE,W_valM,e_valE,E_valC,d_valA,d_valB,
+    f_Byte,f_pc,f_predPC,D_valC,D_valP,d_rvalA,d_rvalB,E_valA,E_valB,M_valA,F_predPC,M_valE,W_valE,W_valM,e_valE,E_valC,d_valA,d_valB,
     f_icode,D_icode,D_ifun,D_rA,D_rB,E_icode,E_ifun,E_dstE,E_dstM,E_srcA,E_srcB,
     M_icode,M_dstE,M_dstM,W_icode,W_dstE,W_dstM,d_dstE,d_dstM,d_srcA,d_srcB,e_dstE,
-    M_Cnd,F_stall,
+    M_Cnd,F_stall,e_Cnd,
     D_stat,E_stat,M_stat,W_stat,
    clk
 );
@@ -38,13 +38,15 @@ always #(CLK_PERIOD/2) clk=~clk;
 initial begin
     $dumpfile("tb_wrap.vcd");
     $dumpvars(0, tb_wrap);
-    $monitor($time," clk=%d, f_pc=%d, f_icode=%d, D_icode=%d, d_valA=%d , d_valB=%d, d_dstE=%d, d_dstM=%d, d_srcA=%d, d_srcB=%d, E_icode=%d, e_dstE=%d, e_valE=%d, E_valC=%d, E_valA=%d, E_valB=%d",// M_icode=%d, W_icode=%d",
+    $monitor($time," clk=%d, f_pc=%d, f_icode=%d, D_icode=%d, d_valA=%d , d_valB=%d, d_dstE=%d, d_dstM=%d, d_srcA=%d, d_srcB=%d, d_rvalA=%d ,d_rvalB=%d,\t E_icode=%d, e_dstE=%d, E_dstE=%d, e_valE=%d, E_valC=%d, E_valA=%d, E_valB=%d, e_Cnd=%d,\t M_dstE=%d, M_valE=%d,\t W_dstE=%d, W_valE=%d",// M_icode=%d, W_icode=%d",
     clk,
     f_pc,
     // f_Byte[79:0],
     f_icode,
-    D_icode,d_valA,d_valB,d_dstE,d_dstM,d_srcA,d_srcB,
-    E_icode,e_dstE,e_valE,E_valC,E_valA,E_valB,
+    D_icode,d_valA,d_valB,d_dstE,d_dstM,d_srcA,d_srcB,d_rvalA,d_rvalB,
+    E_icode,e_dstE,E_dstE,e_valE,E_valC,E_valA,E_valB, e_Cnd,
+    M_dstE,M_valE,
+    W_dstE,W_valE
     // M_icode,
     // W_icode,
     );

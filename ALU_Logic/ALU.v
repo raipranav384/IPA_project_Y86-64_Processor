@@ -27,5 +27,5 @@ module ALU #(
     // CF[2]<=(OUT[N-1]==1)?1:0;
     assign CF[2]=OUT[N-1];
     // or (CF[1],OUT);
-    assign CF[1]=OUT==0?1'b1:1'b0;
+    assign CF[1]=(OUT==0)?1'b1:1'b0;
 endmodule
