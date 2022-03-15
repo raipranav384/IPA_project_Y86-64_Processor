@@ -28,7 +28,7 @@ DataWrap uut
     .valA(valA),
     .valP(valP),
     .icode(icode),
-    .instr_valid(instr_valid),
+    .Instr_valid(instr_valid),
     .imem_error(imem_error),
     .clk(clk),.rst(rst)
 );
@@ -48,12 +48,12 @@ initial begin
     clk<=0;
     #1 rst<=0;
     icode<=4;
-    valE<=65536;
+    valE<=58;
     valA<=64'd12;
     valP<=64'd10;
     imem_error<=0;instr_valid<=1;
 
-    cond<=(inAdd+7>=65536);
+    // cond<=(inAdd+7>=16383);
     #20;
     icode<=5;
     valE<=64'd58;

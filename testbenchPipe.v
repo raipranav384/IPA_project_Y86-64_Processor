@@ -38,7 +38,7 @@ always #(CLK_PERIOD/2) clk=~clk;
 initial begin
     $dumpfile("tb_wrap.vcd");
     $dumpvars(0, tb_wrap);
-    $monitor($time," clk=%d, f_pc=%d, f_icode=%d, D_icode=%d, d_valA=%d , d_valB=%d, d_dstE=%d, d_dstM=%d, d_srcA=%d, d_srcB=%d, d_rvalA=%d ,d_rvalB=%d,\t E_icode=%d, e_dstE=%d, E_dstE=%d, e_valE=%d, E_valC=%d, E_valA=%d, E_valB=%d, e_Cnd=%d, E_dstM=%d,\t M_icode=%d, M_dstE=%d, M_valE=%d, m_valM=%d,\t W_icode=%d, W_dstE=%d, W_valE=%d, \t D_bubble=%d, D_stall=%d, E_bubble=%d, M_bubble=%d, W_stall=%d ",// M_icode=%d, W_icode=%d",
+    $monitor($time," clk=%d, f_pc=%d, f_icode=%d,\t D_icode=%d, d_valA=%d , d_valB=%d, d_dstE=%d, d_dstM=%d, d_srcA=%d, d_srcB=%d, d_rvalA=%d ,d_rvalB=%d,\t E_icode=%d, e_dstE=%d, E_dstE=%d, e_valE=%d, E_valC=%d, E_valA=%d, E_valB=%d, e_Cnd=%d, E_dstM=%d,\t M_icode=%d, M_dstE=%d, M_valE=%d, m_valM=%d,\t W_icode=%d, W_dstE=%d, W_valE=%d, W_dstM=%d, W_valM=%d,\t F_stall=%d, D_bubble=%d, D_stall=%d, E_bubble=%d, M_bubble=%d, W_stall=%d, ",// M_icode=%d, W_icode=%d",
     clk,
     f_pc,
     // f_Byte[79:0],
@@ -46,8 +46,8 @@ initial begin
     D_icode,d_valA,d_valB,d_dstE,d_dstM,d_srcA,d_srcB,d_rvalA,d_rvalB,
     E_icode,e_dstE,E_dstE,e_valE,E_valC,E_valA,E_valB, e_Cnd, E_dstM,
     M_icode,M_dstE,M_valE,m_valM,
-    W_icode,W_dstE,W_valE,
-    D_bubble,D_stall,E_bubble,M_bubble,W_stall
+    W_icode,W_dstE,W_valE, W_dstM, W_valM,
+    F_stall,D_bubble,D_stall,E_bubble,M_bubble,W_stall
     // M_icode,
     // W_icode,
     );

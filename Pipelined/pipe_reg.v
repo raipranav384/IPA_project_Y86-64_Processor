@@ -87,6 +87,7 @@ module pipe_reg (
         pipeReg[482:481]<=stat;
         pipeReg[480:477]<=4'd1;
         pipeReg[476:473]<=4'd0;
+        pipeReg[472:0]<=473'd0;
         end
         else
         begin

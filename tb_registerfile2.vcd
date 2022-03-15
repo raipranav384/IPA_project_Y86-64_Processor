@@ -1,0 +1,342 @@
+$date
+	Wed Mar  9 09:47:57 2022
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb_registerfile2 $end
+$var wire 64 ! valB [63:0] $end
+$var wire 64 " valA [63:0] $end
+$var wire 4 # srcB [3:0] $end
+$var wire 4 $ srcA [3:0] $end
+$var wire 4 % dstM [3:0] $end
+$var wire 4 & dstE [3:0] $end
+$var reg 1 ' clk $end
+$var reg 4 ( icode [3:0] $end
+$var reg 4 ) rA [3:0] $end
+$var reg 4 * rB [3:0] $end
+$var reg 64 + valE [63:0] $end
+$var reg 64 , valM [63:0] $end
+$scope module uut1 $end
+$var wire 1 ' clk $end
+$var wire 64 - valE [63:0] $end
+$var wire 64 . valM [63:0] $end
+$var wire 4 / srcB [3:0] $end
+$var wire 4 0 srcA [3:0] $end
+$var wire 4 1 dstM [3:0] $end
+$var wire 4 2 dstE [3:0] $end
+$var reg 64 3 valA [63:0] $end
+$var reg 64 4 valB [63:0] $end
+$upscope $end
+$scope module uut2 $end
+$var wire 1 5 cnd $end
+$var wire 4 6 icode [3:0] $end
+$var wire 4 7 rA [3:0] $end
+$var wire 4 8 rB [3:0] $end
+$var reg 4 9 dstE [3:0] $end
+$var reg 4 : dstM [3:0] $end
+$var reg 4 ; srcA [3:0] $end
+$var reg 4 < srcB [3:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx <
+bx ;
+b1111 :
+bx 9
+bx 8
+bx 7
+b110 6
+15
+bx 4
+bx 3
+bx 2
+b1111 1
+bx 0
+bx /
+bx .
+bx -
+bx ,
+bx +
+bx *
+bx )
+b110 (
+0'
+bx &
+b1111 %
+bx $
+bx #
+bx "
+bx !
+$end
+#1
+b11 &
+b11 2
+b11 9
+b11 #
+b11 /
+b11 <
+b10 $
+b10 0
+b10 ;
+b101 +
+b101 -
+b11 *
+b11 8
+b10 )
+b10 7
+#5
+b101 !
+b101 4
+1'
+#10
+0'
+#11
+bx !
+bx 4
+b10 &
+b10 2
+b10 9
+b10 #
+b10 /
+b10 <
+b10 *
+b10 8
+#15
+b101 !
+b101 4
+b101 "
+b101 3
+1'
+#20
+0'
+#21
+b110 +
+b110 -
+#25
+b110 !
+b110 4
+b110 "
+b110 3
+1'
+#30
+0'
+#31
+b101 !
+b101 4
+b11 &
+b11 2
+b11 9
+b11 #
+b11 /
+b11 <
+b11 *
+b11 8
+#35
+b110 !
+b110 4
+1'
+#40
+0'
+#45
+1'
+#50
+0'
+#55
+1'
+#60
+0'
+#65
+1'
+#70
+0'
+#75
+1'
+#80
+0'
+#85
+1'
+#90
+0'
+#95
+1'
+#100
+0'
+#105
+1'
+#110
+0'
+#115
+1'
+#120
+0'
+#125
+1'
+#130
+0'
+#135
+1'
+#140
+0'
+#145
+1'
+#150
+0'
+#155
+1'
+#160
+0'
+#165
+1'
+#170
+0'
+#175
+1'
+#180
+0'
+#185
+1'
+#190
+0'
+#195
+1'
+#200
+0'
+#205
+1'
+#210
+0'
+#215
+1'
+#220
+0'
+#225
+1'
+#230
+0'
+#235
+1'
+#240
+0'
+#245
+1'
+#250
+0'
+#255
+1'
+#260
+0'
+#265
+1'
+#270
+0'
+#275
+1'
+#280
+0'
+#285
+1'
+#290
+0'
+#295
+1'
+#300
+0'
+#305
+1'
+#310
+0'
+#315
+1'
+#320
+0'
+#325
+1'
+#330
+0'
+#335
+1'
+#340
+0'
+#345
+1'
+#350
+0'
+#355
+1'
+#360
+0'
+#365
+1'
+#370
+0'
+#375
+1'
+#380
+0'
+#385
+1'
+#390
+0'
+#395
+1'
+#400
+0'
+#405
+1'
+#410
+0'
+#415
+1'
+#420
+0'
+#425
+1'
+#430
+0'
+#435
+1'
+#440
+0'
+#445
+1'
+#450
+0'
+#455
+1'
+#460
+0'
+#465
+1'
+#470
+0'
+#475
+1'
+#480
+0'
+#485
+1'
+#490
+0'
+#495
+1'
+#500
+0'
+#505
+1'
+#510
+0'
+#515
+1'
+#520
+0'
+#525
+1'
+#530
+0'
+#531
